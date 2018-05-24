@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Part number:</strong>
+  <%= @device.part_number %>
+</p>
+
+<p>
+  <strong>Friendly name:</strong>
+  <%= @device.friendly_name %>
+</p>
+
+<p>
+  <strong>Addresses:</strong>
+  <%= @device.addresses %>
+</p>
+
+<p>
+  <strong>Datasheet:</strong>
+  <%= @device.datasheet %>
+</p>
+
+<p>
+  <strong>Adafruit:</strong>
+  <%= @device.adafruit %>
+</p>
+
+<p>
+  <strong>Sparkfun:</strong>
+  <%= @device.sparkfun %>
+</p>
+
+<p>
+  <strong>Amazon:</strong>
+  <%= @device.amazon %>
+</p>
+
+<%= link_to 'Edit', edit_device_path(@device) %> |
+<%= link_to 'Back', devices_path %>

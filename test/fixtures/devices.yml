@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  part_number: MyString
+  friendly_name: MyString
+  addresses: 
+  datasheet: MyString
+  adafruit: MyString
+  sparkfun: MyString
+  amazon: MyString
+
+two:
+  part_number: MyString
+  friendly_name: MyString
+  addresses: 
+  datasheet: MyString
+  adafruit: MyString
+  sparkfun: MyString
+  amazon: MyString
