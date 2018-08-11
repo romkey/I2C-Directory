@@ -1,16 +1,20 @@
-default: &default
+# set defaults for development and testing under Docker
+# production will need to work with Heroku
+docker-default: &default
   adapter: postgresql
-  encoding: unicode
+  encoding: utf8
   host: postgres
   username: postgres
   password:
   pool: 5
 
 development:
-  <<: *default
+  <<: *docker-default
   database: i2capp_development
 
-
 test:
-  <<: *default
+  <<: *docker-default
   database: i2capp_test
+
+production:
+  encoding: utf8
