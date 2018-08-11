@@ -1,0 +1,30 @@
+version: '3'
+services:
+  postgres:
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    networks: 
+      - i2capp-net 
+
+# docker-compose run -p 127.0.0.1:3000:3000 i2capp-web
+# for some reason "ports" in here hasn't been enough and we still need
+# thte command line option
+  web:
+    build: .
+    command: bundle exec rails server -p 3000 -b '0.0.0.0'
+    ports:
+      - "3000:3000"
+    links:
+      - postgres
+    volumes:
+      - .:/app
+    environment:
+      DOCKER: docker
+      RAILS_ENV: development
+    env_file: .env 
+    networks: 
+      - i2capp-net 
+
+networks:
+  i2capp-net:

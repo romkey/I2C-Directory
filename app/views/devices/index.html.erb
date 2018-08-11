@@ -2,11 +2,11 @@
 
 <h1>Devices</h1>
 
-<table>
+<table class='table'>
   <thead>
     <tr>
-      <th>Part number</th>
-      <th>Friendly name</th>
+      <th>Part</th>
+      <th>Description</th>
       <th>Addresses</th>
       <th>Datasheet</th>
       <th>Adafruit</th>
@@ -19,7 +19,7 @@
   <tbody>
     <% @devices.each do |device| %>
       <tr>
-        <td><%= device.part_number %></td>
+        <td><%= link_to device.part_number, device %></td>
         <td><%= device.friendly_name %></td>
         <td><%= device.addresses %></td>
         <td><%= device.datasheet %></td>
