@@ -21,9 +21,25 @@
       <tr>
         <td><%= link_to device.part_number, device %></td>
         <td><%= device.friendly_name %></td>
-        <td><%= device.addresses %></td>
-        <td><%= device.datasheet %></td>
-        <td><%= device.adafruit %></td>
+	<% if device.addresses.length == 0 %>
+	  <td>none</td>
+	<% elsif device.addresses.length == 1 %>
+          <td><%= device.addresses.first %></td>
+	<% elsif device.addresses.length == 2 %>
+          <td><%= device.addresses.first %>, <%= device.addresses.second %></td>
+	<% else %>
+	  <td><%= link_to device.addresses.length, device %></td>
+	<% end %>
+	<% if device.datasheet %>
+          <td><%= link_to '✔', device.datasheet %></td>
+	<% else %>
+	  <td></td>
+	<% end %>
+	<% if device.adafruit %>
+          <td><%= link_to '✔', device.adafruit %></td>
+	<% else %>
+	  <td></td>
+	<% end %>
         <td><%= device.sparkfun %></td>
         <td><%= device.amazon %></td>
         <td><%= link_to 'Show', device %></td>
