@@ -31,7 +31,7 @@
 	  <td><%= link_to device.addresses.length, device %></td>
 	<% end %>
 	<% if device.datasheet %>
-          <td><%= link_to '✔', device.datasheet %></td>
+          <td><%= link_to fa_icon('table', class: 'fa-2x'), device.datasheet %></td>
 	<% else %>
 	  <td></td>
 	<% end %>

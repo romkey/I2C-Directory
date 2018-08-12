@@ -14,27 +14,20 @@
       </ul>
     </p>
 
-    <p class='card-text'>
-      <strong>Datasheet:</strong>
-      <%= @device.datasheet %>
-    </p>
-
-    <p class='card-text'>
-      <strong>Adafruit:</strong>
-      <%= @device.adafruit %>
-    </p>
-
-    <p class='card-text'>
-      <strong>Sparkfun:</strong>
-      <%= @device.sparkfun %>
-    </p>
-
-    <p class='card-text'>
-      <strong>Amazon:</strong>
-      <%= @device.amazon %>
-    </p>
+<% if @device.datasheet %>
+  <%= link_to fa_icon('table', class: 'fa-2x'), @device.datasheet %></td>
+<% end %>
+<% if @device.adafruit %>
+  <%= link_to image_tag('Adafruit-logo-64x64.png', size: '32', alt: 'See @device on Adafruit'), @device.adafruit %>
+<% end %>
+<% if @device.sparkfun %>
+  <%= link_to image_tag('Sparkfun-logo-64x64.png', size: '32', alt: 'See @device on Sparkfun'), @device.sparkfun %>
+<% end %>
+<% if @device.amazon %>
+  <%= link_to image_tag('Amazon-logo-64x64.png', size: '32', alt: 'See @device on Amazon'), @device.amazon %>
+<% end %>
   </div>
 </div>
 
 <%= link_to 'Edit', edit_device_path(@device) %> |
-<%= link_to 'Back', devices_path %>
+<%= link_to 'Back', @devices_path %>

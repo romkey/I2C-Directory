@@ -10,8 +10,6 @@ RUN apt-get update -qqy && apt-get -qqyy install \
 RUN apt-get install -y \ 
   build-essential \ 
   nodejs \
-  mdns-scan \
-  avahi-daemon avahi-utils libavahi-client-dev libavahi-client3 libavahi-common-dev libavahi-compat-libdnssd-dev \
   zip \
   tzdata \
   curl \
