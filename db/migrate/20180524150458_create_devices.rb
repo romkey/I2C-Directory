@@ -1,9 +1,8 @@
 class CreateDevices < ActiveRecord::Migration[5.2]
   def change
     create_table :devices do |t|
-      t.string :part_number, null: false
+      t.string :part_number, null: false, unique: true
       t.string :friendly_name, null: false
-      t.boolean :reserved, null: false
       t.string :addresses, null: false, array: true
       t.string :datasheet
       t.string :adafruit

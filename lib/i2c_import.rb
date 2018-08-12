@@ -27,7 +27,7 @@ module I2CImport
       end
 
       addresses = self._get_addresses matches[3]
-      results.push({ name: matches[1], description: matches[2], addresses: addresses })
+      results.push({ name: matches[1], description: matches[2], addresses: addresses, attribution: url })
     end
 
     results

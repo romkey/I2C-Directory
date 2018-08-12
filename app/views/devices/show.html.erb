@@ -1,5 +1,3 @@
-<p id="notice"><%= notice %></p>
-
 <div class='card'>
   <div class="card-body">
     <h1 class='card-title'><%= @device.part_number %></h1>
@@ -8,8 +6,8 @@
     <p class='card-text'>
       <strong>Addresses:</strong>
       <ul class="list-group">
-	<% @device.addresses.each do |addr|  %>
-	<li class="list-group-item"><%= addr %></li>
+	<% @device.address.order(address: :asc).each do |addr|  %>
+	<li class="list-group-item"><%= link_to("0x%02x" % addr.address, addr) %></li>
 	<% end %>
       </ul>
     </p>

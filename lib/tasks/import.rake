@@ -13,10 +13,25 @@ task :import => [ :environment ] do
       next
     end
 
-    Device.create part_number: item[:name],
-                  friendly_name: item[:description],
-                  addresses: item[:addresses] || [],
-                  reserved: false
+    d = Device.create part_number: item[:name],
+                      friendly_name: item[:description],
+                      reserved: false,
+                      attribution: item[:attribution]
+
+
+    if item[:addresses]
+      item[:addresses].each do |addr|
+        record = Address.find_by address: addr.to_i(16)
+        unless record
+          record = Address.create address: addr.to_i(16)
+        end
+
+        record.device << d
+      end
+    else
+      puts '>>>>> NO ADDRESSES??'
+      pp item
+    end
   end
 
   File.open("i2c.json", 'w') { |f| f.write results.to_json.to_s }

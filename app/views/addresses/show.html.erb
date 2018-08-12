@@ -1,0 +1,19 @@
+<div class='card'>
+    <div class="card-body">
+    <h1 class='card-title'>I2C Address <%="0x%02x" % @address.address %></h1>
+    <div class='card-subtitle'><%= @address.device.count == 0 ? "No" : @address.device.count %> known devices at this address</div>
+
+    <div>
+    <p class='card-text'>
+      <strong>Devices:</strong>
+      <ul class="list-group">
+	<% @address.device.order(part_number: :asc).each do |device|  %>
+  	  <li class="list-group-item">
+	    <%= link_to(device.part_number, device) %> - <%= device.friendly_name %>
+	  </li>
+	<% end %>
+      </ul>
+    </p>
+</div>
+<%= link_to 'Edit', edit_address_path(@address) %> |
+<%= link_to 'Back', addresses_path %>

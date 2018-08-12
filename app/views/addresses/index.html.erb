@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Addresses</h1>
+
+<table class='table'>
+  <thead>
+    <tr>
+      <th>Address</th>
+      <th>Devices</th>
+      <th colspan="2"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @addresses.each do |address| %>
+      <tr>
+        <td><%= link_to("0x%02x" %address.address, address) %></td>
+	<td>
+	  <% address.device.map do |device| %>
+	     <%= link_to(device.part_number, device) %> 
+	   <% end %>
+	</td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Address', new_address_path %>

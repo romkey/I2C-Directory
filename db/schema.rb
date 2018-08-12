@@ -10,16 +10,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_12_134609) do
+ActiveRecord::Schema.define(version: 2018_08_12_202506) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "addresses", force: :cascade do |t|
+    t.integer "address", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "notes", default: "", null: false
+    t.index ["address"], name: "index_addresses_on_address"
+    t.index ["notes"], name: "index_addresses_on_notes"
+  end
+
+  create_table "addresses_devices", id: false, force: :cascade do |t|
+    t.bigint "address_id", null: false
+    t.bigint "device_id", null: false
+  end
 
   create_table "devices", force: :cascade do |t|
     t.string "part_number", null: false
     t.string "friendly_name", null: false
     t.boolean "reserved", null: false
-    t.string "addresses", null: false, array: true
     t.string "datasheet"
     t.string "adafruit"
     t.string "sparkfun"
@@ -28,6 +41,10 @@ ActiveRecord::Schema.define(version: 2018_08_12_134609) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "obsolete", default: false, null: false
+    t.string "attribution"
+    t.index ["friendly_name"], name: "index_devices_on_friendly_name"
+    t.index ["part_number"], name: "index_devices_on_part_number"
+    t.index ["views"], name: "index_devices_on_views"
   end
 
 end

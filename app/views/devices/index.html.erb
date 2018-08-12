@@ -12,7 +12,7 @@
       <th>Adafruit</th>
       <th>Sparkfun</th>
       <th>Amazon</th>
-      <th colspan="3"></th>
+      <th colspan="7"></th>
     </tr>
   </thead>
 
@@ -21,14 +21,14 @@
       <tr>
         <td><%= link_to device.part_number, device %></td>
         <td><%= device.friendly_name %></td>
-	<% if device.addresses.length == 0 %>
+	<% if device.address.length == 0 %>
 	  <td>none</td>
-	<% elsif device.addresses.length == 1 %>
-          <td><%= device.addresses.first %></td>
-	<% elsif device.addresses.length == 2 %>
-          <td><%= device.addresses.first %>, <%= device.addresses.second %></td>
+	<% elsif device.address.length == 1 %>
+          <td><%= link_to device.address.first.to_s, device.address.first %></td>
+	<% elsif device.address.length == 2 %>
+          <td><%= link_to device.address.first.to_s, device.address.first %>, <%= link_to device.address.second.to_s, device.address.second %></td>
 	<% else %>
-	  <td><%= link_to device.addresses.length, device %></td>
+	  <td><%= link_to device.address.length, device %></td>
 	<% end %>
 	<% if device.datasheet %>
           <td><%= link_to fa_icon('table', class: 'fa-2x'), device.datasheet %></td>
