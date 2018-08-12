@@ -36,12 +36,20 @@
 	  <td></td>
 	<% end %>
 	<% if device.adafruit %>
-          <td><%= link_to '✔', device.adafruit %></td>
+          <td><%= link_to image_tag('Adafruit-logo-64x64.png', size: '32', alt: 'See device on Adafruit'), device.adafruit %></td>
 	<% else %>
 	  <td></td>
 	<% end %>
-        <td><%= device.sparkfun %></td>
-        <td><%= device.amazon %></td>
+	<% if device.sparkfun %>
+          <td><%= link_to image_tag('Sparkfun-logo-64x64.png', size: '32', alt: 'See device on Sparkfun'), device.adafruit %></td>
+	<% else %>
+	  <td></td>
+	<% end %>
+	<% if device.amazon %>
+          <td><%= link_to image_tag('Amazon-logo-64x64.png', size: '32', alt: 'See device on Amazon'), device.adafruit %></td>
+	<% else %>
+	  <td></td>
+	<% end %>
       </tr>
     <% end %>
   </tbody>
