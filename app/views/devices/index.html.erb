@@ -32,12 +32,12 @@
 	<% else %>
 	  <td><%= link_to device.address.length, device %></td>
 	<% end %>
-	<% if device.datasheet %>
+	<% if device.datasheet.present? %>
           <td><%= link_to fa_icon('table', class: 'fa-2x'), device.datasheet %></td>
 	<% else %>
 	  <td></td>
 	<% end %>
-	<% if device.adafruit %>
+	<% if device.adafruit.present? %>
           <td><%= link_to image_tag('Adafruit-logo-64x64.png', size: '32', alt: 'See device on Adafruit'), device.adafruit %></td>
 	<% else %>
 	  <td></td>
@@ -47,7 +47,7 @@
 	<% else %>
 	  <td></td>
 	<% end %>
-	<% if device.amazon %>
+	<% if device.amazon.present? %>
           <td><%= link_to image_tag('Amazon-logo-64x64.png', size: '32', alt: 'See device on Amazon'), device.amazon %></td>
 	<% else %>
 	  <td></td>
