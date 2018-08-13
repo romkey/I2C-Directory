@@ -51,6 +51,11 @@
     <%= form.text_field :amazon, class: 'form-control'  %>
   </div>
 
+  <div class="field form-group">
+    <%= form.label :ids %><br/>
+    <%= form.collection_check_boxes:address_ids, Address.where(reserved: false).order(address: :asc), :id, :to_s, class: 'form-control'  %>
+  </div>
+
   <div class="actions">
     <button type="submit" class="btn btn-primary">Update Device</button>
   </div>
