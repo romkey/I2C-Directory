@@ -4,10 +4,10 @@ require 'json'
 require 'pp'
 
 module I2CImport
-  def self.download_page
-    url = "https://learn.adafruit.com/i2c-addresses/the-list"
+  URL = "https://learn.adafruit.com/i2c-addresses/the-list"
 
-    open(url)
+  def self.download_page
+    open(I2CImport::URL)
   end
 
   def self.process_page(page)
@@ -27,7 +27,7 @@ module I2CImport
       end
 
       addresses = self._get_addresses matches[3]
-      results.push({ name: matches[1], description: matches[2], addresses: addresses, attribution: url })
+      results.push({ name: matches[1], description: matches[2], addresses: addresses, attribution: I2CImport::URL })
     end
 
     results
@@ -78,6 +78,6 @@ module I2CImport
     new_text = text.gsub(',', '')
     new_text.gsub!('or', '')
 
-    return new_text.split(/s+/)
+    return new_text.split(/ +/)
   end
 end
