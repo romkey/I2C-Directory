@@ -15,7 +15,6 @@ task :import => [ :environment ] do
 
     d = Device.create part_number: item[:name],
                       friendly_name: item[:description],
-                      reserved: false,
                       attribution: item[:attribution]
 
 

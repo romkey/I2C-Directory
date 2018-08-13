@@ -10,20 +10,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_13_024531) do
+ActiveRecord::Schema.define(version: 2018_08_13_150108) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "addresses", force: :cascade do |t|
+    t.string "slug", null: false, unique: true
+
     t.integer "address", null: false
-    t.boolean "reserved", null: false, default: false
     t.string "notes", default: "", null: false
+    t.boolean "reserved", default: false, null: false
+
+    t.integer "views", default: 0, null: false
 
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+
     t.index ["address"], name: "index_addresses_on_address"
     t.index ["notes"], name: "index_addresses_on_notes"
+    t.index ["views"], name: "index_addresses_on_views"
+    t.index ["slug"], name: "index_addresses_on_slugs"
   end
 
   create_table "addresses_devices", id: false, force: :cascade do |t|
@@ -32,25 +39,32 @@ ActiveRecord::Schema.define(version: 2018_08_13_024531) do
   end
 
   create_table "devices", force: :cascade do |t|
-    t.string "part_number", null: false
+    t.string "slug", null: false, unique: true
+
+    t.string "part_number", null: false, unique: true
     t.string "friendly_name", null: false
-    t.boolean "reserved", null: false
+
+    t.string "manufacturer", default: "", null: false
+    t.boolean "obsolete", default: false, null: false
+    t.string "attribution"
+    t.boolean "suggestion", default: false, null: false
+
     t.string "datasheet"
     t.string "adafruit"
     t.string "sparkfun"
     t.string "amazon"
+
     t.integer "views", default: 0, null: false
+
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "obsolete", default: false, null: false
-    t.string "attribution"
-    t.string "manufacturer", default: "", null: false
-    t.boolean "suggestion", default: false, null: false
+
     t.index ["friendly_name"], name: "index_devices_on_friendly_name"
     t.index ["manufacturer"], name: "index_devices_on_manufacturer"
     t.index ["part_number"], name: "index_devices_on_part_number"
     t.index ["suggestion"], name: "index_devices_on_suggestion"
     t.index ["views"], name: "index_devices_on_views"
+    t.index ["slug"], name: "index_devices_on_slugs"
   end
 
 end
