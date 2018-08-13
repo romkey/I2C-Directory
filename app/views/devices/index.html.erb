@@ -42,7 +42,7 @@
 	<% else %>
 	  <td></td>
 	<% end %>
-	<% if devices.sparkfun.present? %>
+	<% if device.sparkfun.present? %>
           <td><%= link_to image_tag('Sparkfun-logo-64x64.png', size: '32', alt: 'See device on Sparkfun'), device.sparkfun %></td>
 	<% else %>
 	  <td></td>
