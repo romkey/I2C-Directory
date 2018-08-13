@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
   resources :addresses
   resources :devices
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  get '/admin/clear_database', to: 'admin#clear_database'
 end

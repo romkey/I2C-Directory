@@ -7,6 +7,7 @@
     <tr>
       <th>Part</th>
       <th>Description</th>
+      <th>Manufacturer</th>
       <th>Addresses</th>
       <th>Datasheet</th>
       <th>Adafruit</th>
@@ -21,6 +22,7 @@
       <tr>
         <td><%= link_to device.part_number, device %></td>
         <td><%= device.friendly_name %></td>
+	<td><%= device.manufacturer %></td>
 	<% if device.address.length == 0 %>
 	  <td>none</td>
 	<% elsif device.address.length == 1 %>
