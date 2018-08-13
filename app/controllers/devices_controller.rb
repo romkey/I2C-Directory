@@ -4,11 +4,11 @@ class DevicesController < ApplicationController
   # GET /devices
   # GET /devices.json
   def index
-    if params[:q]
-      @devices = Device.where("part_number ILIKE '%{params[:q]}%'").order(part_number: :asc)
-    else
-      @devices = Device.order(part_number: :asc)
-    end
+    @devices = if params[:q]
+                 Device.where("part_number ILIKE '%#{params[:q]}%' OR friendly_name ILIKE '%#{params[:q]}%' OR manufacturer ILIKE '%#{params[:q]}%'").order(part_number: :asc)
+               else
+                 Device.order(part_number: :asc)
+               end
   end
 
   # GET /devices/1
