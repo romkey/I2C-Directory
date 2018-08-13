@@ -11,41 +11,47 @@
     </div>
   <% end %>
 
-  <div class="field">
+  <div class="field form-group">
     <%= form.label :part_number %>
-    <%= form.text_field :part_number %>
+    <%= form.text_field :part_number, class: 'form-control' %>
   </div>
 
-  <div class="field">
+  <div class="field form-group">
     <%= form.label :friendly_name %>
-    <%= form.text_field :friendly_name %>
+    <%= form.text_field  :friendly_name, class: 'form-control'  %>
   </div>
-  <div class="field">
+
+  <div class="field form-group">
+    <%= form.label :manufacturer %>
+    <%= form.text_field :manufacturer, class: 'form-control'  %>
+  </div>
+
+  <div class="field form-group">
     <%= form.label :obsolete %>
-    <%= form.check_box :obsolete %>
+    <%= form.check_box :obsolete, class: 'form-control'  %>
   </div>  
 
-  <div class="field">
+  <div class="field form-group">
     <%= form.label :datasheet %>
-    <%= form.text_field :datasheet %>
+    <%= form.text_field :datasheet, class: 'form-control'  %>
   </div>
 
-  <div class="field">
+  <div class="field form-group">
     <%= form.label :adafruit %>
-    <%= form.text_field :adafruit %>
+    <%= form.text_field :adafruit, class: 'form-control'  %>
   </div>
 
-  <div class="field">
+  <div class="field form-group">
     <%= form.label :sparkfun %>
-    <%= form.text_field :sparkfun %>
+    <%= form.text_field :sparkfun, class: 'form-control'  %>
   </div>
 
-  <div class="field">
+  <div class="field form-group">
     <%= form.label :amazon %>
-    <%= form.text_field :amazon %>
+    <%= form.text_field :amazon, class: 'form-control'  %>
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <button type="submit" class="btn btn-primary">Update Device</button>
   </div>
 <% end %>
