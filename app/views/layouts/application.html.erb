@@ -22,11 +22,16 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <%= link_to 'Devices', devices_path %>
-      </li>
+        <%= link_to 'I2C Devices', devices_path, class: 'nav-link' %>
+      </li> 
       <li class="nav-item">
-        <%= link_to 'Addresses', addresses_path %>
+        <%= link_to 'I2C Addresses', addresses_path, class: 'nav-link' %>
       </li>
+<% if Rails.env.development? %>
+      <li class="nav-item">
+        <%= link_to 'Clear database', '/admin/clear_database', class: 'nav-link' %>
+      </li>
+<% end %>
     </ul>
     <form class="form-inline my-2 my-lg-0">
       <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="q">
