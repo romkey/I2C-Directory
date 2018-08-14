@@ -18,6 +18,11 @@ class DevicesController < ApplicationController
         headers['Content-Type'] ||= 'application/json'
         send_data @devices.to_json, filename: 'devices.json'
       }
+      format.cpp {
+        headers['Content-Disposition'] = 'attachment; filename="i2cscanner_devices.cpp'
+        headers['Content-Type'] ||= 'text/x-c'
+        render 'i2c_scanner_devices.cpp', filename: 'i2c_scanner_devices.cpp'
+      }
     end
   end
 

@@ -1,0 +1,9 @@
+struct i2c_device {
+  const char* name;
+  const char* function;
+  byte *addrs;
+} known_addresses[] = {
+<% @devices.each do |device| %>
+ { "<%= device.part_number %>", "<%= device.friendly_name %>", "<%= device.address.map { |addr| addr.to_s }.join('') %>" },
+<% end %>
+};
