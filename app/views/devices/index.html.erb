@@ -50,7 +50,7 @@
 	<% if device.amazon.present? %>
           <td><%= link_to image_tag('Amazon-logo-64x64.png', size: '32', alt: 'See device on Amazon'), device.amazon %></td>
 	<% else %>
-	  <td></td>
+          <td><%= link_to image_tag('Amazon-logo-64x64.png', size: '32', alt: 'See device on Amazon'), device.to_amazon_link %></td>
 	<% end %>
       </tr>
     <% end %>

@@ -3,6 +3,10 @@ class Device < ApplicationRecord
 
   before_validation :ensure_has_slug
 
+  def to_amazon_link
+    "https://www.amazon.com/s?field-keywords=#{part_number}"
+  end
+
 private
   def ensure_has_slug
     if slug.nil? || slug.empty?
