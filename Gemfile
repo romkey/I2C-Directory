@@ -43,3 +43,6 @@ gem 'font-awesome-rails'
 
 gem 'devise'
 gem 'dotenv-rails'
+
+gem 'high_voltage'
+

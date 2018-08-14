@@ -1,51 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title><%= yield(:page_title) %></title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+<head>
+<title><%= yield(:page_title) %></title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<%= csrf_meta_tags %>
+<%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-  </head>
+<%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+<%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+</head>
 
 <body>
 <div class='container'>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a class="navbar-brand" href="#">I2C Devices</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
+  <span class="navbar-toggler-icon"></span>
   </button>
 
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <%= link_to 'I2C Devices', devices_path, class: 'nav-link' %>
-      </li> 
-      <li class="nav-item">
-        <%= link_to 'I2C Addresses', addresses_path, class: 'nav-link' %>
-      </li>
-<% if Rails.env.development? %>
-      <li class="nav-item">
-        <%= link_to 'Clear database', '/admin/clear_database', class: 'nav-link' %>
-      </li>
-<% end %>
-<% if user_signed_in? %>
-  <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'nav-link'  %>
-<% end %>
-    </ul>
-    <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="q">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form>
-  </div>
+<div class="collapse navbar-collapse" id="navbarSupportedContent">
+  <ul class="navbar-nav mr-auto">
+    <li class="nav-item">
+    <%= link_to 'I2C Devices', devices_path, class: 'nav-link' %>
+    </li> 
+    <li class="nav-item">
+    <%= link_to 'I2C Addresses', addresses_path, class: 'nav-link' %>
+    </li>
+    <% if Rails.env.development? %>
+    <li class="nav-item">
+    <%= link_to 'Clear database', '/admin/clear_database', class: 'nav-link' %>
+    </li>
+    <% end %>
+    <% if user_signed_in? %>
+    <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'nav-link'  %>
+    <% end %>
+  </ul>
+  <form class="form-inline my-2 my-lg-0">
+  <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="q">
+  <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+  </form>
+</div>
 </nav>
-<p id="notice"><%= notice %></p>
-  <%= yield %>
-  </div>
-  </body>
+
+<% if notice %>
+<div class="alert alert-primary" role="alert">
+  <p id="notice"><%= notice %></p>
+</div>
+<% end %>
+
+<%= yield %>
+
+</div>
+<footer>
+<div class='container'>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <ul class="navbar-nav mr-auto">
+    <li class="nav-item">
+    <%= link_to 'About', '/about', class: 'nav-link' %>
+    </li> 
+    <li class="nav-item">
+    <%= link_to 'Source Code', 'https://github.com/romkey/i2capp', class: 'nav-link' %>
+    </li>
+  </ul>
+</div>
+</nav>
+</footer>
+</body>
 </html>
 
 <% content_for :page_title, "I2C Device Directory" %>

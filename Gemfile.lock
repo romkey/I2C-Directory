@@ -90,6 +90,7 @@ GEM
       railties (>= 3.2, < 6.0)
     globalid (0.4.1)
       activesupport (>= 4.2.0)
+    high_voltage (3.1.0)
     i18n (1.1.0)
       concurrent-ruby (~> 1.0)
     io-like (0.3.0)
@@ -223,6 +224,7 @@ DEPENDENCIES
   devise
   dotenv-rails
   font-awesome-rails
+  high_voltage
   jbuilder (~> 2.5)
   jquery-rails
   listen (>= 3.0.5, < 3.2)
