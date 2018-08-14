@@ -10,6 +10,15 @@ class DevicesController < ApplicationController
                else
                  Device.order(part_number: :asc)
                end
+
+    respond_to do |format|
+      format.html { render :index }
+      format.json {
+        headers['Content-Disposition'] = 'attachment; filename="i2c-devices.json"'
+        headers['Content-Type'] ||= 'application/json'
+        send_data @devices.to_json, filename: 'devices.json'
+      }
+    end
   end
 
   # GET /devices/1
