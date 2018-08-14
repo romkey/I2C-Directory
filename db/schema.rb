@@ -10,27 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_13_150108) do
+ActiveRecord::Schema.define(version: 2018_08_13_224419) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "addresses", force: :cascade do |t|
-    t.string "slug", null: false, unique: true
-
+    t.string "slug", null: false
     t.integer "address", null: false
     t.string "notes", default: "", null: false
     t.boolean "reserved", default: false, null: false
-
     t.integer "views", default: 0, null: false
-
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-
     t.index ["address"], name: "index_addresses_on_address"
     t.index ["notes"], name: "index_addresses_on_notes"
-    t.index ["views"], name: "index_addresses_on_views"
     t.index ["slug"], name: "index_addresses_on_slugs"
+    t.index ["views"], name: "index_addresses_on_views"
   end
 
   create_table "addresses_devices", id: false, force: :cascade do |t|
@@ -39,32 +35,43 @@ ActiveRecord::Schema.define(version: 2018_08_13_150108) do
   end
 
   create_table "devices", force: :cascade do |t|
-    t.string "slug", null: false, unique: true
-
-    t.string "part_number", null: false, unique: true
+    t.string "slug", null: false
+    t.string "part_number", null: false
     t.string "friendly_name", null: false
-
     t.string "manufacturer", default: "", null: false
     t.boolean "obsolete", default: false, null: false
     t.string "attribution"
     t.boolean "suggestion", default: false, null: false
-
     t.string "datasheet"
     t.string "adafruit"
     t.string "sparkfun"
     t.string "amazon"
-
     t.integer "views", default: 0, null: false
-
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-
     t.index ["friendly_name"], name: "index_devices_on_friendly_name"
     t.index ["manufacturer"], name: "index_devices_on_manufacturer"
     t.index ["part_number"], name: "index_devices_on_part_number"
+    t.index ["slug"], name: "index_devices_on_slugs"
     t.index ["suggestion"], name: "index_devices_on_suggestion"
     t.index ["views"], name: "index_devices_on_views"
-    t.index ["slug"], name: "index_devices_on_slugs"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer "sign_in_count", default: 0, null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.inet "current_sign_in_ip"
+    t.inet "last_sign_in_ip"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
 end

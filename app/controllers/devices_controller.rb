@@ -1,5 +1,6 @@
 class DevicesController < ApplicationController
   before_action :set_device, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!, only: [ :new, :create, :edit, :update, :destroy ]
 
   # GET /devices
   # GET /devices.json
@@ -40,6 +41,23 @@ class DevicesController < ApplicationController
       end
     end
   end
+
+  # POST /devices
+  # POST /devices.json
+  def suggest
+    @device = Device.new(device_params, suggestion: true)
+
+    respond_to do |format|
+      if @device.save
+        format.html { redirect_to @device, notice: 'Device was successfully created.' }
+        format.json { render :show, status: :created, location: @device }
+      else
+        format.html { render :new }
+        format.json { render json: @device.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
 
   # PATCH/PUT /devices/1
   # PATCH/PUT /devices/1.json
