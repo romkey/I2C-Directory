@@ -61,4 +61,6 @@
 <%= link_to 'New Device', new_device_path %>
 <% end %>
 
+<%= will_paginate @devices %>
+
 <% content_for :page_title, 'List of I2C Devices' %>

@@ -12,12 +12,17 @@ class DevicesController < ApplicationController
                end
 
     respond_to do |format|
-      format.html { render :index }
+      format.html {
+        @devices = @devices.paginate(page: params[:page])
+        render :index
+      }
+
       format.json {
         headers['Content-Disposition'] = 'attachment; filename="i2c-devices.json"'
         headers['Content-Type'] ||= 'application/json'
         send_data @devices.to_json, filename: 'devices.json'
       }
+
       format.cpp {
         headers['Content-Disposition'] = 'attachment; filename="i2cscanner_devices.cpp'
         headers['Content-Type'] ||= 'text/x-c'
