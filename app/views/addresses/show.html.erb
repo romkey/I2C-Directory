@@ -17,5 +17,7 @@
 </div>
 
 <% if user_signed_in? %>
-<%= link_to 'Edit', edit_device_path(@device) %>
+<%= link_to 'Edit', edit_device_path(@address) %>
 <% end %>
+
+<% content_for :page_title, "I2C Address #{@address.to_s} | I2C Device Directory" %>

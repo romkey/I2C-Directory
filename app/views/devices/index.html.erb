@@ -62,3 +62,5 @@
 <% if user_signed_in? %>
 <%= link_to 'New Device', new_device_path %>
 <% end %>
+
+<% content_for :page_title, 'List of I2C Devices' %>

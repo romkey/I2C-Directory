@@ -31,3 +31,5 @@
 <% if user_signed_in? %>
 <%= link_to 'Edit', edit_device_path(@device) %>
 <% end %>
+
+<% content_for :page_title, "#{@device.part_number} | I2C Device Directory" %>

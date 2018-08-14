@@ -37,3 +37,5 @@
 <% if user_signed_in? %>
 <%= link_to 'New Address', new_address_path %>
 <% end %>
+
+<% content_for :page_title, 'List of I2C Addresses' %>
