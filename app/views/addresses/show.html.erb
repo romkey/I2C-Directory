@@ -15,5 +15,7 @@
       </ul>
     </p>
 </div>
-<%= link_to 'Edit', edit_address_path(@address) %> |
-<%= link_to 'Back', addresses_path %>
+
+<% if user_signed_in? %>
+<%= link_to 'Edit', edit_device_path(@device) %>
+<% end %>
