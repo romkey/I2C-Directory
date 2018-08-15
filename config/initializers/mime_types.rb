@@ -4,4 +4,4 @@
 # Mime::Type.register "text/richtext", :rtf
 
 Mime::Type.register "text/x-c", :cpp
-
+#Mime::Type.register "application/rss+xml", :rss

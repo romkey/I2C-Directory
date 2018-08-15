@@ -38,6 +38,11 @@ class DevicesController < ApplicationController
         headers['Content-Type'] ||= 'text/x-c'
         render 'i2c_scanner_devices.cpp', filename: 'i2c_scanner_devices.cpp'
       }
+
+      format.rss {
+        @devices = @devices.order(created_at: :desc).limit(20)
+        render 'feed', layout: false
+      }
     end
   end
 

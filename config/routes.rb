@@ -10,4 +10,7 @@ Rails.application.routes.draw do
 
   # XML sitemap
   get "/sitemap.xml" => "sitemap#index", :format => "xml", :as => :sitemap
+
+  # RSS feed
+  get '/feed' => 'devices#index', format: "rss"
 end
