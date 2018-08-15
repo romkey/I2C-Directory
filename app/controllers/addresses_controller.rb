@@ -11,6 +11,9 @@ class AddressesController < ApplicationController
   # GET /addresses/1
   # GET /addresses/1.json
   def show
+    unless user_signed_in?
+      @address.update(views: @address.views + 1)
+    end
   end
 
   # GET /addresses/new

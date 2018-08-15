@@ -49,6 +49,9 @@ class DevicesController < ApplicationController
   # GET /devices/1
   # GET /devices/1.json
   def show
+    unless user_signed_in?
+      @device.update(views: @device.views + 1)
+    end
   end
 
   # GET /devices/new
