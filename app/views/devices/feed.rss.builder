@@ -20,7 +20,6 @@ xml.rss :version => "2.0" do
 	text = "<p>" + (device.manufacturer ||  "") + " " + device.friendly_name + "</p>"
 
         xml.description text
-
       end
     end
   end
