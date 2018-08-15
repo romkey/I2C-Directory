@@ -7,4 +7,7 @@ Rails.application.routes.draw do
   # page routing
   get '/', to: 'high_voltage/pages#show', id: 'root'
   get 'about', to: 'high_voltage/pages#show', id: 'about'
+
+  # XML sitemap
+  get "/sitemap.xml" => "sitemap#index", :format => "xml", :as => :sitemap
 end
