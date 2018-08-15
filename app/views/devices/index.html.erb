@@ -1,5 +1,9 @@
 <h1>Devices&nbsp;&nbsp;  <%= link_to(fa_icon('download')+'JSON', '/devices.json') %>&nbsp;&nbsp;  <%= link_to(fa_icon('download') + 'c++', '/devices.cpp') %></h1></h1>
 
+<p>
+<%= link_to 'Suggest a device', new_device_path + '?suggestion=1', class: 'btn btn-primary' %>
+</p>
+
 <table class='table'>
   <thead>
     <tr>

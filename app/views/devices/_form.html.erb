@@ -11,6 +11,11 @@
     </div>
   <% end %>
 
+<% if @suggestion %>
+<p>Please enter as much information as you have about the device. After you submit it, we will review it and add it to the directory as appropriate.</p>
+<%= form.hidden_field :suggestion, value: 1 %>
+<% end %>
+
   <div class="field form-group">
     <%= form.label :part_number %>
     <%= form.text_field :part_number, class: 'form-control' %>
@@ -27,7 +32,7 @@
   </div>
 
   <div class="field form-group">
-    <%= form.label :obsolete %>
+    <%= form.label 'Obsolete?' %>
     <%= form.check_box :obsolete, class: 'form-control'  %>
   </div>  
 
@@ -52,7 +57,7 @@
   </div>
 
   <div class="field form-group">
-    <%= form.label :ids %><br/>
+    <%= form.label 'I2C Addresses' %><br/>
     <%= form.collection_check_boxes :address_ids, Address.where(reserved: false).order(address: :asc), :id, :to_s, class: 'form-check-inline'  do |b|
 	b.label(class: "form-check-label-inline") { (b.text + ' ' + b.check_box(class: "form-check-inline")).html_safe }
 	end

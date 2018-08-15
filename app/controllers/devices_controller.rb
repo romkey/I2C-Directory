@@ -11,6 +11,16 @@ class DevicesController < ApplicationController
                  Device.order(part_number: :asc)
                end
 
+    if user_signed_in?
+      if params[:suggestion]
+        @devices = @devices.suggestions
+      else
+        @devices = @devices.published
+      end
+    else
+      @devices = @devices.published
+    end
+
     respond_to do |format|
       format.html {
         @devices = @devices.paginate(page: params[:page])
@@ -39,6 +49,7 @@ class DevicesController < ApplicationController
   # GET /devices/new
   def new
     @device = Device.new
+    @suggestion = params[:suggestion] || false
   end
 
   # GET /devices/1/edit
