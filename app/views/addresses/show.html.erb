@@ -6,7 +6,7 @@
     <p class='card-text'>
       <h2 class='card-title'>Devices:</h2>
       <ul class="list-group">
-	<% @address.device.order(part_number: :asc).each do |device|  %>
+	<% @address.device.published.order(part_number: :asc).each do |device|  %>
   	  <li class="list-group-item">
 	    <%= link_to(device.part_number, device) %> - <%= device.friendly_name %>
 	  </li>
