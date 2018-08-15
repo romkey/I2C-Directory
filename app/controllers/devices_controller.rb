@@ -34,7 +34,7 @@ class DevicesController < ApplicationController
       }
 
       format.cpp {
-        headers['Content-Disposition'] = 'attachment; filename="i2cscanner_devices.cpp'
+        headers['Content-Disposition'] = 'attachment; filename="i2c_scanner_devices.cpp'
         headers['Content-Type'] ||= 'text/x-c'
         render 'i2c_scanner_devices.cpp', filename: 'i2c_scanner_devices.cpp'
       }

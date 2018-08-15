@@ -18,9 +18,9 @@
 </div >
     <p class='card-text'>
       <h2 class='card-title'>Addresses:</h2
-      <ul class="list-group">
+      <ul class="list-unstyled">
 	<% @device.address.order(address: :asc).each do |addr|  %>
-	<li class="list-group-item"><%= link_to("0x%02x" % addr.address, addr) %></li>
+	<li><%= link_to("0x%02x" % addr.address, addr) %></li>
 	<% end %>
       </ul>
     </p>

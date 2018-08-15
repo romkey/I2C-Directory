@@ -1,9 +1,9 @@
-struct i2c_device {
-  const char* name;
-  const char* function;
-  byte *addrs;
-} known_addresses[] = {
+#include "i2c_scanner.h"
+
+i2c_device_t i2c_scanner_known_devices[] = {
 <% @devices.each do |device| %>
- { "<%= device.part_number %>", "<%= device.friendly_name %>", "<%= device.address.map { |addr| addr.to_s }.join('') %>" },
+ { "<%= device.part_number %>", "<%= device.friendly_name %>", (const byte *)"<%= device.address.map { |addr| "\\x%02x" % addr.address }.join('') %>" },
 <% end %>
 };
+
+int i2c_scanner_known_devices_length = sizeof(i2c_scanner_known_devices)/sizeof(i2c_device_t);
