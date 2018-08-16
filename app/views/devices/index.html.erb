@@ -4,25 +4,26 @@
 <%= link_to 'Suggest a device', new_device_path + '?suggestion=1', class: 'btn btn-primary' %>
 </p>
 
-<table class='table'>
-  <thead>
+<table class='table table-striped'>
+  <thead class='thead-light'>
     <tr>
       <th>Part</th>
       <th>Description</th>
       <th>Manufacturer</th>
       <th>Addresses</th>
+
       <th>Datasheet</th>
       <th>Adafruit</th>
       <th>Sparkfun</th>
       <th>Amazon</th>
-      <th colspan="7"></th>
+      <th colspan="8"></th>
     </tr>
   </thead>
 
   <tbody>
     <% @devices.each do |device| %>
       <tr>
-        <td><%= link_to device.part_number, device %></td>
+        <th scope='row'><%= link_to device.part_number, device %></th>
         <td><%= device.friendly_name %></td>
 	<td><%= device.manufacturer %></td>
 	<% if device.address.length == 0 %>

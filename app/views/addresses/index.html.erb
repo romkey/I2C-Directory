@@ -1,7 +1,7 @@
 <h1>Addresses</h1>
 
-<table class='table'>
-  <thead>
+<table class='table table-striped'>
+  <thead class='thead-light'>
     <tr>
       <th>Address</th>
       <th>Devices</th>
@@ -14,7 +14,7 @@
     <% @addresses.each do |address| %>
       <% if address.reserved? || address.device.count > 0 %>
       <tr>
-        <td><%= link_to("0x%02x" %address.address, address) %></td>
+        <th scope="row"><%= link_to("0x%02x" %address.address, address) %></th>
 	<td>
 	  <% address.device.published.map do |device| %>
 	     <%= link_to(device.part_number, device) %> 
