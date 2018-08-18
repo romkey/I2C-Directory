@@ -1,6 +1,10 @@
 <h1>Internet I2C Device Directory</h1>
-<p>The Internet I2C Device Directory includes <%= Device.count %> I2C/TwoWire devices.
-</p>
+<div class='row'>
+  <div class='col-sm'>
+<img src='<%= image_path('lis3dh.jpg') %>' class='float-right img-thumbnail rounded' style='width: 100px; height: 100px;'/>
+<p>The Internet I2C Device Directory includes <%= Device.count %> I2C/TwoWire devices.</p>
 <p>I2C - also called "TwoWire" - allows simple connections to sensors and other devices by connecting clock ("SDC") and data ("SDA") wires in a bus configuration along with power and ground.</p>
 <p>I2C devices are identified by their address. The primary purpose of this site is to make it easy to discover I2C devices by their functionality and to easily find their addresses.</p>
-
+  </div>
+    <div class='col-sm'></div>
+</div>

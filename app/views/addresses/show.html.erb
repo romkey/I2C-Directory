@@ -20,3 +20,4 @@
 <% end %>
 
 <% content_for :page_title, "I2C Address #{@address.to_s} | I2C Device Directory" %>
+<% content_for :page_description, "#{@address.to_s}: I2C/TwoWire addresses, devices: #{@address.device.map { |dev|dev.part_number }.join(', ') }" %>
