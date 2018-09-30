@@ -1,27 +1,35 @@
-<h2>Suggestions</h2>
-<table cols=2>
-  <tr>
-    <th>Device</th>
-    <th>Views</th>
-  </tr>
-<% @most_views.each do |device| %>
-  <tr>
-    <th><%= device.friendly_name %></th>
-    <th><%= device.views %></th>
-  </tr>
+<div class="row">
+  <div class="col">
+    <h2>Suggestions</h2>
+    <table cols="2" class="table">
+      <tr>
+	<th>Manufacturer</th>
+	<th>Device</th>
+	<th>Function</th>
+      </tr>
+<% @suggestions.each do |device| %>
+      <tr>
+	<th><%= device.manufacturer %></th>
+	<th><%= link_to device, device.part_number %></th>
+	<th><%= device.friendly_name %></th>
+      </tr>
 <% end %>
-</table>
+    </table>
+  </div>
 
-<h2>Most viewed</h2>
-<table cols=2>
-  <tr>
-    <th>Device</th>
-    <th>Views</th>
-  </tr>
+  <div class="col">
+    <h2>Most viewed</h2>
+    <table cols="2" class="table">
+      <tr>
+	<th>Device</th>
+	<th>Views</th>
+      </tr>
 <% @most_views.each do |device| %>
-  <tr>
-    <th><%= device.friendly_name %></th>
-    <th><%= device.views %></th>
-  </tr>
+      <tr>
+	<th><%= device.friendly_name %></th>
+	<th><%= device.views %></th>
+      </tr>
 <% end %>
-</table>
+    </table>
+  </div>
+</div>
