@@ -1,7 +1,7 @@
 <h1>I2C Device List <%= link_to(fa_icon('rss'), '/devices.rss') %></h1>
 
 <p>
-<%= link_to 'Suggest a device', new_device_path + '?suggestion=1', class: 'btn btn-primary btn-success' %>
+<%= link_to 'Suggest a device', '/devices/suggest_new', class: 'btn btn-primary btn-success' %>
 <%= link_to 'Download as JSON', '/devices.json', class: 'btn btn-primary' %>
 <%= link_to 'Download I2C Scanner C++ code ', '/devices.cpp', class: 'btn btn-primary' %>
 </p>

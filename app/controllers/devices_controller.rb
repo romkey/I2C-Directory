@@ -1,24 +1,22 @@
 class DevicesController < ApplicationController
   before_action :set_device, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate_user!, only: [ :new, :create, :edit, :update, :destroy ]
+  before_action :authenticate_user!, only: [ :new, :edit, :update, :destroy ]
 
   # GET /devices
   # GET /devices.json
   def index
     @devices = if params[:q]
+                 @is_search = true
                  Device.where("part_number ILIKE '%#{params[:q]}%' OR friendly_name ILIKE '%#{params[:q]}%' OR manufacturer ILIKE '%#{params[:q]}%'").order(part_number: :asc)
                else
+                 @is_search = false
                  Device.order(part_number: :asc)
                end
 
-    if user_signed_in?
-      if params[:suggestion]
+    if user_signed_in? && params[:suggestion]
         @devices = @devices.suggestions
-      else
-        @devices = @devices.published
-      end
     else
-      @devices = @devices.published
+        @devices = @devices.published
     end
 
     respond_to do |format|
@@ -57,7 +55,7 @@ class DevicesController < ApplicationController
   # GET /devices/new
   def new
     @device = Device.new
-    @suggestion = params[:suggestion] || false
+    @suggestion = false
   end
 
   # GET /devices/1/edit
@@ -68,6 +66,11 @@ class DevicesController < ApplicationController
   # POST /devices.json
   def create
     @device = Device.new(device_params)
+
+    unless @device.suggestion? || user_signed_in?
+      format.html { redirect_to devices_path, notice: 'Not created, user not signed in' }
+      return
+    end
 
     respond_to do |format|
       if @device.save
@@ -80,9 +83,18 @@ class DevicesController < ApplicationController
     end
   end
 
-  # POST /devices
+  # POST /devices/suggest
   # POST /devices.json
-  def suggest
+  def suggest_new
+    @device = Device.new
+    @suggestion = true
+
+    respond_to do |format|
+      format.html { render :new, notice: 'Enter device details' }
+    end
+  end
+
+  def suggest_create
     @device = Device.new(device_params, suggestion: true)
 
     respond_to do |format|
