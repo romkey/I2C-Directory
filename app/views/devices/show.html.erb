@@ -29,7 +29,7 @@
 </div>
 
 <% if user_signed_in? %>
-<%= link_to 'Edit', edit_device_path(@device) %> | <%= link_to 'Delete', delete_device_path(@device), method: :delete, class: "btn btn-danger",  data: {confirm: "Are you sure?"} %>
+<%= link_to 'Edit', edit_device_path(@device) %> | <%= link_to 'Delete', device_path(@device), method: :delete, class: "btn btn-danger",  data: {confirm: "Are you sure?"} %>
 <% end %>
 
 <% content_for :page_title, "#{@device.part_number} | I2C Device Directory" %>
