@@ -1,0 +1,27 @@
+<h2>Suggestions</h2>
+<table cols=2>
+  <tr>
+    <th>Device</th>
+    <th>Views</th>
+  </tr>
+<% @most_views.each do |device| %>
+  <tr>
+    <th><%= device.friendly_name %></th>
+    <th><%= device.views %></th>
+  </tr>
+<% end %>
+</table>
+
+<h2>Most viewed</h2>
+<table cols=2>
+  <tr>
+    <th>Device</th>
+    <th>Views</th>
+  </tr>
+<% @most_views.each do |device| %>
+  <tr>
+    <th><%= device.friendly_name %></th>
+    <th><%= device.views %></th>
+  </tr>
+<% end %>
+</table>

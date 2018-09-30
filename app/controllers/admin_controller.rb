@@ -2,7 +2,8 @@ class AdminController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @most_views = Device.order(views: :desc)
+    @most_views = Device.order(views: :desc).limit(20)
+    @suggestions = Device.suggestions.order(created_at: :desc).limit(20)
   end
 
   def clear_database
