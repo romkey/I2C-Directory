@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>New I2C device suggestion</h1>
+    <p>
+      A user has suggested:
+    </p>
+    <table>
+      <tr>
+	<td>Manufacturer:</td>
+	<td><%= @device.manufacturer %></td>
+      </tr>
+      <tr>
+	<td>Part number:</td>
+	<td><%= @device.part_number %></td>
+      </tr>
+      <tr>
+	<td>Description:</td>
+	<td><%= @device.friendly_name %></td>
+      </tr>
+    </table>
+    <p>
+      Manage this suggestion <%= link_to "here", @device %>
+      </p>
+  </body>
+</html>
