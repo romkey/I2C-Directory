@@ -72,10 +72,6 @@ class DevicesController < ApplicationController
       return
     end
 
-    if @device.suggestion?
-      SuggestionMailer.with(device: @device).new_suggestion.deliver_now
-    end
-
     respond_to do |format|
       if @device.save
         format.html { redirect_to @device, notice: 'Device was successfully created.' }
@@ -84,6 +80,11 @@ class DevicesController < ApplicationController
         format.html { render :new }
         format.json { render json: @device.errors, status: :unprocessable_entity }
       end
+    end
+
+    # have to save the device first so that it has an ID and slug - otherwise we can't make a link to it
+    if @device.suggestion?
+      SuggestionMailer.with(device: @device).new_suggestion.deliver_now
     end
   end
 
