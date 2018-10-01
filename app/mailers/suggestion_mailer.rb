@@ -3,6 +3,6 @@ class SuggestionMailer < ApplicationMailer
 
   def new_suggestion
     @device = params[:device]
-    mail(to: 'romkey+i2caddr+suggestion', subject: 'New I2Caddr suggestion')
+    mail(to: 'romkey+i2caddr+suggestion@romkey.com', subject: 'New I2Caddr suggestion')
   end
 end
