@@ -72,6 +72,10 @@ class DevicesController < ApplicationController
       return
     end
 
+    if @device.suggestion?
+      SuggestionMailer.with(device: @device).new_suggestion.deliver_now
+    end
+
     respond_to do |format|
       if @device.save
         format.html { redirect_to @device, notice: 'Device was successfully created.' }
