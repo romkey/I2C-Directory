@@ -16,7 +16,28 @@
 <% end %>
     </table>
   </div>
+  <div class="col">
+    <h2>Datasheet Suggestions</h2>
+    <table cols="2" class="table">
+      <tr>
+	<th>Manufacturer</th>
+	<th>Device</th>
+	<th>Function</th>
+	<th>Datasheets</th>
+      </tr>
+<% @datasheet_suggestions.all.each do |device| %>
+      <tr>
+	<th><%= device.manufacturer %></th>
+	<th><%= link_to device.part_number, edit_device_path(device) %></th>
+	<th><%= device.friendly_name %></th>
+	<th><%= device.datasheet_suggestions.count %></th>
+      </tr>
+<% end %>
+    </table>
+  </div>
 
+</div>
+<div class='row'>
   <div class="col">
     <h2>Most viewed</h2>
     <table cols="2" class="table">

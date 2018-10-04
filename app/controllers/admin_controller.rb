@@ -4,6 +4,7 @@ class AdminController < ApplicationController
   def index
     @most_views = Device.order(views: :desc).limit(20)
     @suggestions = Device.suggestions.order(created_at: :desc).limit(20)
+    @datasheet_suggestions = Device.joins(:datasheet_suggestions).group('devices.id')
   end
 
   def clear_database
