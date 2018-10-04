@@ -41,6 +41,17 @@
     <%= form.text_field :datasheet, class: 'form-control'  %>
   </div>
 
+  <% if @device.datasheet_suggestions.count > 0 %>
+  <h5>Suggested datasheets</h5>
+  <ul>
+    <% @device.datasheet_suggestions.each do |datasheet| %>
+    <li><%= button_tag "Use", type: 'button', class:'btn btn-info', onclick: "useDatasheet('#{datasheet.link}')" %>
+      <%= datasheet.title %> - <a href="<%= datasheet.link %>" target="_blank"><%= datasheet.link %></a></li>
+    <% end %>
+    </ul>
+    <hr>
+  <% end %>
+
   <div class="field form-group">
     <%= form.label :adafruit %>
     <%= form.text_field :adafruit, class: 'form-control'  %>

@@ -17,4 +17,9 @@ class AdminController < ApplicationController
 
   def stats
   end
+
+  # CSV
+  # manufacturer, part number, friendly name, datasheet, addresses (space delimited)
+  def import
+  end
 end

@@ -21,6 +21,8 @@ WORKDIR /app
 
 COPY package.json ./
 
+COPY .irbrc /root/.irbrc
+
 RUN npm rebuild node-sass --force
 
 ADD Gemfile* /app/
