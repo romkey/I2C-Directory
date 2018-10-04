@@ -6,7 +6,7 @@ class Device < ApplicationRecord
 
   scope :suggestions, -> { where(suggestion: true) }
   scope :published, -> { where(suggestion: false) }
-  scope :needs_datasheet, -> { where("datasheet = '' OR datasheet = NULL") }
+  scope :needs_datasheet, -> { where("datasheet = '' OR datasheet IS NULL ") }
 
   def to_amazon_link
     "https://www.amazon.com/s?field-keywords=#{part_number}"
