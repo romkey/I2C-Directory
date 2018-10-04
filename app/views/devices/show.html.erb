@@ -1,19 +1,22 @@
 <div class='card'>
   <div class="card-body">
     <h1 class='card-title'><%= @device.part_number %></h1>
+<% if @device.manufacturer.present? %>
+    <div class='card-subtitle'><%= @device.manufacturer %></div>
+<% end %>
     <div class='card-subtitle'><%= @device.friendly_name %></div>
     <div class='card-subtitle'>
 <% if @device.datasheet.present? %>
-  <%= link_to fa_icon('table', class: 'fa-2x'), @device.datasheet %></td>
+Datasheet:  <%= @device.datasheet, @device.datasheet %>
 <% end %>
 <% if @device.adafruit.present? %>
-  <%= link_to image_tag('Adafruit-logo-64x64.png', size: '32', alt: 'See @device on Adafruit'), @device.adafruit %>
+Adafruit: <%= link_to @device.adafruit, @device.adafruit %>
 <% end %>
 <% if @device.sparkfun.present? %>
-  <%= link_to image_tag('Sparkfun-logo-64x64.png', size: '32', alt: 'See @device on Sparkfun'), @device.sparkfun %>
+Sparkfun: <%= link_to @device.sparkfun, @device.sparkfun %>
 <% end %>
 <% if @device.amazon.present? %>
-  <%= link_to image_tag('Amazon-logo-64x64.png', size: '32', alt: 'See @device on Amazon'), @device.amazon %>
+Amazon: <%= link_to @device.amazon, @device.amazon %>
 <% end %>
 </div >
     <p class='card-text'>
