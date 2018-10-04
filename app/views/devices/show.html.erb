@@ -4,7 +4,7 @@
 <% if @device.manufacturer.present? %>
     <div class='card-subtitle'><h2 class='card-title'><%= @device.manufacturer %></h2></div>
 <% end %>
-    <div class='card-subtitle'><%= @device.friendly_name %></div>
+    <div class='card-subtitle'><h3><%= @device.friendly_name %></h3></div>
     <div class='card-subtitle'>
 <% if @device.datasheet.present? %>
 <p> 

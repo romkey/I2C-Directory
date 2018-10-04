@@ -86,6 +86,10 @@ class DevicesController < ApplicationController
     if @device.suggestion?
       SuggestionMailer.with(device: @device).new_suggestion.deliver_now
     end
+
+    if @device.datasheet.present?
+      @device.datasheet_suggestions.delete_all
+    end
   end
 
   # POST /devices/suggest
