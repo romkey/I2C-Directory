@@ -4,9 +4,6 @@ require 'dotenv/load'
 
 require 'pp'
 
-part_number = 'SAA9056'
-
-
 module I2CappSearch
   def self.search(term, type)
     uri = URI.parse 'https://www.googleapis.com/customsearch/v1'
@@ -36,6 +33,11 @@ module I2CappSearch
     results = JSON.parse response.body
     pp results
     pages = []
+
+    unless results["items"]
+      return nil
+    end
+
     results["items"].each do |item|
       puts "title #{item['title']} url #{item['link']}"
       pages.push({ title: item['title'], link: item['link'] })
