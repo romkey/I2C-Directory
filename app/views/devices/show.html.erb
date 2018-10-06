@@ -5,25 +5,29 @@
     <div class='card-subtitle'><h2 class='card-title'><%= @device.manufacturer %></h2></div>
 <% end %>
     <div class='card-subtitle'><h3 class='card-title'><%= @device.friendly_name %></h3></div>
+
 <% if @device.datasheet.present? %>
-<p class='card-text'> 
-Datasheet:  <%=link_to  @device.datasheet, @device.datasheet %>
-</p>
+    <p class='card-text'> 
+      Datasheet:  <%=link_to  @device.datasheet, @device.datasheet %>
+    </p>
 <% end %>
+
 <% if @device.adafruit.present? %>
-<p class='card-text'> 
-Adafruit: <%= link_to @device.adafruit, @device.adafruit %>
-</p>
+    <p class='card-text'> 
+      Adafruit: <%= link_to @device.adafruit, @device.adafruit %>
+    </p>
 <% end %>
+
 <% if @device.sparkfun.present? %>
-<p class='card-text'> 
-Sparkfun: <%= link_to @device.sparkfun, @device.sparkfun %>
-</p>
+    <p class='card-text'> 
+      Sparkfun: <%= link_to @device.sparkfun, @device.sparkfun %>
+    </p>
 <% end %>
-<p class='card-text'> 
-<%= link_to "Search Amazon for #{@device.part_number}", @device.to_amazon_link %>
-</p>
-</div >
+
+    <p class='card-text'> 
+      <%= link_to "Search Amazon for #{@device.part_number}", @device.to_amazon_link %>
+    </p>
+
     <p class='card-text'>
       <h2 class='card-title'>Addresses:</h2
       <ul class="list-unstyled">
@@ -33,12 +37,13 @@ Sparkfun: <%= link_to @device.sparkfun, @device.sparkfun %>
       </ul>
     </p>
 
+    <% if user_signed_in? %>
+      <%= link_to 'Edit', edit_device_path(@device), class: 'btn btn-info' %> <%= link_to 'Delete', device_path(@device), method: :delete, class: "btn btn-danger",  data: {confirm: "Are you sure?"} %>
+    <% end %>
+
   </div>
 </div>
 
-<% if user_signed_in? %>
-<%= link_to 'Edit', edit_device_path(@device), class: 'btn btn-info' %> <%= link_to 'Delete', device_path(@device), method: :delete, class: "btn btn-danger",  data: {confirm: "Are you sure?"} %>
-<% end %>
 
 <% content_for :page_title, "#{@device.part_number} | I2C Device Directory" %>
 <% content_for :page_description, "#{@device.part_number}: #{@device.friendly_name}, I2C/TwoWire addresses: #{@device.address.map { |addr| addr.to_s }.join(', ') }" %>
