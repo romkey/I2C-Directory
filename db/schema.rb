@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_02_152836) do
+ActiveRecord::Schema.define(version: 2018_10_06_054030) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -59,6 +59,15 @@ ActiveRecord::Schema.define(version: 2018_10_02_152836) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "scanned", default: false, null: false
+    t.datetime "release_date"
+    t.boolean "is_5v", default: false, null: false
+    t.boolean "is_3v", default: false, null: false
+    t.boolean "is_standard_speed", default: false, null: false
+    t.boolean "is_full_speed", default: false, null: false
+    t.boolean "is_fast_speed", default: false, null: false
+    t.boolean "is_high_speed", default: false, null: false
+    t.boolean "is_ultra_fast_speed", default: false, null: false
+    t.boolean "is_spi", default: false, null: false
     t.index ["friendly_name"], name: "index_devices_on_friendly_name"
     t.index ["manufacturer"], name: "index_devices_on_manufacturer"
     t.index ["part_number"], name: "index_devices_on_part_number"
