@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   resources :devices, param: :slug
 
   get '/admin/clear_database', to: 'admin#clear_database'
+  post '/admin/import', to: 'admin#import'
   get '/admin/', to: 'admin#index'
 
   # page routing

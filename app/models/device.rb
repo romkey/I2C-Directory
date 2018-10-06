@@ -18,4 +18,15 @@ private
       self.slug = to_slug(part_number)
     end
   end
+
+  def self.import(csv_file)
+    i = 0
+
+    CSV.foreach(csv_file.path) do |row|
+      Device.create! manufacturer: row[0], part_number: row[1], friendly_name: row[2]
+      i += 1
+    end
+
+    return i
+  end
 end

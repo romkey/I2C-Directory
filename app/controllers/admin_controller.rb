@@ -1,3 +1,6 @@
+require 'csv'
+require 'pp'
+
 class AdminController < ApplicationController
   before_action :authenticate_user!
 
@@ -22,5 +25,10 @@ class AdminController < ApplicationController
   # CSV
   # manufacturer, part number, friendly name, datasheet, addresses (space delimited)
   def import
+    pp params
+
+    uploaded = params[:csv]
+    count = Device.import uploaded
+    redirect_to '/devices', notice: "#{count} devices imported"
   end
 end
