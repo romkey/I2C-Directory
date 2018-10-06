@@ -4,24 +4,23 @@
 <% if @device.manufacturer.present? %>
     <div class='card-subtitle'><h2 class='card-title'><%= @device.manufacturer %></h2></div>
 <% end %>
-    <div class='card-subtitle'><h3><%= @device.friendly_name %></h3></div>
-    <div class='card-subtitle'>
+    <div class='card-subtitle'><h3 class='card-title'><%= @device.friendly_name %></h3></div>
 <% if @device.datasheet.present? %>
-<p> 
+<p class='card-text'> 
 Datasheet:  <%=link_to  @device.datasheet, @device.datasheet %>
 </p>
 <% end %>
 <% if @device.adafruit.present? %>
-<p> 
+<p class='card-text'> 
 Adafruit: <%= link_to @device.adafruit, @device.adafruit %>
 </p>
 <% end %>
 <% if @device.sparkfun.present? %>
-<p> 
+<p class='card-text'> 
 Sparkfun: <%= link_to @device.sparkfun, @device.sparkfun %>
 </p>
 <% end %>
-<p> 
+<p class='card-text'> 
 <%= link_to "Search Amazon for #{@device.part_number}", @device.to_amazon_link %>
 </p>
 </div >

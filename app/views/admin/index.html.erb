@@ -1,8 +1,11 @@
 <div class="row">
   <div class="col">
-  <h2>Import CVS file</h2>
+  <h2>Import CSV file</h2>
   <%= form_tag('/admin/import', method: :post, multipart: true) do %>
-    <%= file_field_tag 'csv' %><br/>
+    <div class='form-group'>
+      <label for="csv">CSV file to upload</label>
+      <%= file_field_tag 'csv' %><br/>
+      </div>
     <button type="submit" class="btn btn-primary">Import file</button>
   <% end %>
   </form>
