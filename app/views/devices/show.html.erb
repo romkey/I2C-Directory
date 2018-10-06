@@ -22,7 +22,7 @@ Sparkfun: <%= link_to @device.sparkfun, @device.sparkfun %>
 </p>
 <% end %>
 <p> 
-Amazon: <%= link_to @device.amazon, @device.amazon %>
+<%= link_to "Search Amazon for #{@device.part_number}", @device.to_amazon_link %>
 </p>
 </div >
     <p class='card-text'>
