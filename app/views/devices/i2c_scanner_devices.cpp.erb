@@ -37,7 +37,7 @@
 
 i2c_device_t i2c_scanner_known_devices[] = {
 <% @devices.each do |device| %>
-  <% if @devices.address.count > 0 %>
+  <% if device.address.count > 0 %>
  { "<%= device.part_number %>", "<%= device.friendly_name %>", (const byte *)"<%= device.address.map { |addr| "\\x%02x" % addr.address }.join('') %>" },
    <% end %>
 <% end %>
