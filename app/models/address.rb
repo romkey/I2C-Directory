@@ -7,6 +7,14 @@ class Address < ApplicationRecord
     "0x%02x" % address
   end
 
+  def to_slug(string)
+    string.parameterize.truncate(80, omission: '')
+  end
+
+  def to_param
+    slug
+  end
+
 private
   def ensure_has_slug
     if slug.nil? || slug.empty?
