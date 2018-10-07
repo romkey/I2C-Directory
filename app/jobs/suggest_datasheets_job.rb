@@ -4,9 +4,7 @@ class SuggestDatasheetsJob < ApplicationJob
   queue_as :default
 
   def perform(*args)
-    Device.needs_datasheet.limit(10).each do |device|
-      next if device.scanned
-
+    Device.needs_datasheet.where('scanned = false').limit(10).each do |device|
       pages = I2CappSearch.search_for_datasheets device.part_number
 
       if pages
