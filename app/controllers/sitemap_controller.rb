@@ -4,6 +4,7 @@ class SitemapController < ApplicationController
 
     @devices = Device.all
     @addresses = Address.all
+    @resources = Resource.all
 
     respond_to do |format|
       format.xml

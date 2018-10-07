@@ -7,7 +7,7 @@ class AdminController < ApplicationController
   def index
     @most_views = Device.order(views: :desc).limit(20)
     @suggestions = Device.suggestions.order(created_at: :desc).limit(20)
-    @datasheet_suggestions = Device.where("datasheet IS NULL OR datasheet = ''").joins(:datasheet_suggestions).group('devices.id')
+    @datasheet_suggestions = Device.where("datasheet IS NULL OR datasheet = ''").joins(:datasheet_suggestions).group('devices.id').order(:part_number)
   end
 
   def clear_database
