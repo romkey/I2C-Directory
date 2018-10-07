@@ -144,7 +144,7 @@ class DevicesController < ApplicationController
 
   def clear_suggestions
     @device.datasheet_suggestions.delete_all
-    redirect_to device_path(@device)
+    redirect_to '/admin'
   end
 
   private
