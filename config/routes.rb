@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :resources
   devise_for :users, controllers: { registrations: "registrations"}
 
   # device suggestions

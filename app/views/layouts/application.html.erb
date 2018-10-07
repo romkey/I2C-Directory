@@ -32,6 +32,9 @@
     <li class="nav-item">
     <%= link_to 'I2C Addresses', addresses_path, class: 'nav-link' %>
     </li>
+    <li class="nav-item">
+    <%= link_to 'I2C Resources', resources_path, class: 'nav-link' %>
+    </li>
     <% if Rails.env.development? %>
     <li class="nav-item">
     <%= link_to 'Clear database', '/admin/clear_database', class: 'nav-link' %>
@@ -42,7 +45,7 @@
     <%= link_to "Logout", destroy_user_session_path, method: :delete, class: 'nav-link'  %>
     <% end %>
   </ul>
-  <form class="form-inline my-2 my-lg-0">
+  <form class="form-inline my-2 my-lg-0" action="/devices">
   <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="q">
   <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
   </form>

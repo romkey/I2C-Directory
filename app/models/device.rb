@@ -12,6 +12,15 @@ class Device < ApplicationRecord
     "https://www.amazon.com/s?field-keywords=#{part_number}"
   end
 
+  def to_slug(string)
+    string.parameterize.truncate(80, omission: '')
+  end
+
+  def to_param
+    slug
+  end
+
+
 private
   def ensure_has_slug
     if slug.nil? || slug.empty?

@@ -1,0 +1,22 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Resources</h1>
+
+<table>
+  <tbody>
+    <% @resources.each do |resource| %>
+      <tr>
+        <td><%= link_to resource.title, resource.link %></a></td>
+	<% if user_signed_in? %>
+	<td><%= link_to 'edit', edit_resource_path(resource) %></td>
+	<% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<% if user_signed_in? %>
+  <%= link_to 'New Resource', new_resource_path %>
+<% end %>
