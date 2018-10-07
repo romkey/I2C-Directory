@@ -5,6 +5,8 @@ class SuggestDatasheetsJob < ApplicationJob
 
   def perform(*args)
     Device.needs_datasheet.limit(10).each do |device|
+      next if device.scanned
+
       pages = I2CappSearch.search_for_datasheets device.part_number
 
       if pages
