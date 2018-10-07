@@ -1,6 +1,6 @@
 class DevicesController < ApplicationController
-  before_action :set_device, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate_user!, only: [ :new, :edit, :update, :destroy ]
+  before_action :set_device, only: [:show, :edit, :update, :destroy, :clear_suggestions ]
+  before_action :authenticate_user!, only: [ :new, :edit, :update, :destroy, :clear_suggestions ]
 
   # GET /devices
   # GET /devices.json
@@ -140,6 +140,11 @@ class DevicesController < ApplicationController
       format.html { redirect_to devices_url, notice: 'Device was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def clear_suggestions
+    @device.datasheet_suggestions.delete_all
+    redirect_to device_path(@device)
   end
 
   private

@@ -44,6 +44,7 @@
 	<th><%= link_to device.part_number, edit_device_path(device) %></th>
 	<th><%= device.friendly_name %></th>
 	<th><%= device.datasheet_suggestions.count %></th>
+	<th><%= link_to 'clear suggestions', "/devices/#{device.slug}/clear_suggestions" %></th>
       </tr>
 <% end %>
     </table>

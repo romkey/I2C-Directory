@@ -7,6 +7,8 @@ Rails.application.routes.draw do
   resources :addresses, param: :slug
   resources :devices, param: :slug
 
+  get '/devices/:slug/clear_suggestions', to: 'devices#clear_suggestions'
+
   get '/admin/clear_database', to: 'admin#clear_database'
   post '/admin/import', to: 'admin#import'
   get '/admin/', to: 'admin#index'
