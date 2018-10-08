@@ -8,6 +8,8 @@ class Device < ApplicationRecord
   scope :published, -> { where(suggestion: false) }
   scope :needs_datasheet, -> { where("datasheet = '' OR datasheet IS NULL ") }
 
+  alias_method :old_as_json, :as_json
+
   def to_amazon_link
     "https://www.amazon.com/s?field-keywords=#{part_number}"
   end
@@ -20,6 +22,26 @@ class Device < ApplicationRecord
     slug
   end
 
+  def as_json(**args)
+    args[:except] = [ "id", "slug", "attribution", "created_at", "updated_at" ]
+    result = self.old_as_json(args)
+
+if false
+    result.delete("id")
+    result.delete("slug")
+    result.delete("attribution")
+    result.delete("created_at")
+    result.delete("updated_at")
+end
+
+    result.delete_if { |key, value| value.nil? || value == ''}
+
+    if self.address.count
+      result[:addresses] = self.address.pluck(:address)
+    end
+
+    result
+  end
 
 private
   def ensure_has_slug
