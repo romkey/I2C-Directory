@@ -14,6 +14,9 @@ Rails.application.routes.draw do
   post '/admin/import', to: 'admin#import'
   get '/admin/', to: 'admin#index'
 
+  # contact form
+  get '/contact', to: 'contact_us/contacts#new'
+
   # page routing
   get '/', to: 'high_voltage/pages#show', id: 'root'
   get 'about', to: 'high_voltage/pages#show', id: 'about'
