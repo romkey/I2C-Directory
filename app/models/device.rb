@@ -23,7 +23,7 @@ class Device < ApplicationRecord
   end
 
   def as_json(**args)
-    args[:except] = [ "id", "slug", "attribution", "created_at", "updated_at", "suggestion" ]
+    args[:except] = [ "id", "slug", "attribution", "created_at", "updated_at", "suggestion", "views", "scanned" ]
     result = self.old_as_json(args)
 
     result.delete_if { |key, value| value.nil? || value == ''}
