@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_07_150713) do
+ActiveRecord::Schema.define(version: 2018_10_08_213613) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -48,7 +48,7 @@ ActiveRecord::Schema.define(version: 2018_10_07_150713) do
     t.string "part_number", null: false
     t.string "friendly_name", null: false
     t.string "manufacturer", default: "", null: false
-    t.boolean "obsolete", default: false, null: false
+    t.boolean "obsolete"
     t.string "attribution"
     t.boolean "suggestion", default: false, null: false
     t.string "datasheet"
