@@ -37,6 +37,21 @@
   </div>  
 
   <div class="field form-group">
+    <%= form.label 'SPI?' %>
+    <%= form.check_box :is_spi, class: 'form-control'  %>
+  </div>  
+
+  <div class="field form-group">
+    <%= form.label '3V?' %>
+    <%= form.check_box :is_3v, class: 'form-control'  %>
+  </div>  
+
+  <div class="field form-group">
+    <%= form.label '5V?' %>
+    <%= form.check_box :is_5v, class: 'form-control'  %>
+  </div>  
+
+  <div class="field form-group">
     <%= form.label :datasheet %>
     <%= form.text_field :datasheet, class: 'form-control'  %>
   </div>
@@ -66,6 +81,12 @@
     <%= form.label :amazon %>
     <%= form.text_field :amazon, class: 'form-control'  %>
   </div>
+
+  <div class="field form-group">
+    <%= form.label "Release year" %>
+    <%= form.number_field :release_date, class: 'form-control', min: 1982, max: 2025 %>
+  </div>
+
 
   <div class="field form-group">
     <%= form.label 'I2C Addresses' %><br/>

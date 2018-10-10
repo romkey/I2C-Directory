@@ -155,6 +155,6 @@ class DevicesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def device_params
-      params.require(:device).permit(:part_number, :friendly_name, :addresses, :manufacturer, :suggestion, :obsolete, :datasheet, :adafruit, :sparkfun, :amazon, address_ids: [])
+      params.require(:device).permit(:part_number, :friendly_name, :addresses, :manufacturer, :suggestion, :obsolete, :datasheet, :adafruit, :sparkfun, :amazon, :release_date, :is_5v, :is_3v, :is_standard_speed, :is_full_speed, :is_fast_speed, :is_high_speed, :is_ultra_fast_speed, :is_spi, address_ids: [])
     end
 end
