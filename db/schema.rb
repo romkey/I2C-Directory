@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_12_000426) do
+ActiveRecord::Schema.define(version: 2018_10_12_003658) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,6 +40,7 @@ ActiveRecord::Schema.define(version: 2018_10_12_000426) do
     t.bigint "device_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "type", default: "", null: false
     t.index ["device_id"], name: "index_datasheet_suggestions_on_device_id"
   end
 

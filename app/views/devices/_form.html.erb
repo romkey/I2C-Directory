@@ -31,24 +31,24 @@
     <%= form.text_field :manufacturer, class: 'form-control'  %>
   </div>
 
-  <div class="field form-group">
-    <%= form.label 'Obsolete?' %>
-    <%= form.check_box :obsolete, class: 'form-control'  %>
+  <div class="form-check">
+    <%= form.check_box :obsolete, class: 'form-check-input' %>
+    <%= form.label 'Obsolete?', class: 'form-check-label' %>
   </div>  
 
-  <div class="field form-group">
-    <%= form.label 'SPI?' %>
-    <%= form.check_box :is_spi, class: 'form-control'  %>
+  <div class="form-check">
+    <%= form.check_box :is_spi, class: 'form-check-input'  %>
+    <%= form.label 'SPI?', class: 'form-check-label'  %>
   </div>  
 
-  <div class="field form-group">
-    <%= form.label '3V?' %>
-    <%= form.check_box :is_3v, class: 'form-control'  %>
+  <div class='form-check form-check-inline'>
+    <%= form.label '3V?', class: 'form-check-label' %>
+    <%= form.check_box :is_3v, class: 'form-control form-check-input'  %>
   </div>  
 
-  <div class="field form-group">
-    <%= form.label '5V?' %>
-    <%= form.check_box :is_5v, class: 'form-control'  %>
+  <div class='form-check form-check-inline'>
+    <%= form.label '5V?', class: 'form-check-label' %>
+    <%= form.check_box :is_5v, class: 'form-control form-check-input'  %>
   </div>  
 
   <div class="field form-group">
