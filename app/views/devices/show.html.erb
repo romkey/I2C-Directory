@@ -6,6 +6,26 @@
 <% end %>
     <div class='card-subtitle'><h3 class='card-title'><%= @device.friendly_name %></h3></div>
 
+<% if @device.release_date %>
+<p class='card-text'>    
+  Release year: <%= @device.releaes_date %>
+</p>
+<% end %>
+
+<% if @device.is_3v || @device.is_5v || @device.is_spi %>
+<p class='card-text'>    
+  <% if @device.is_spi %>
+    ✅ SPI 
+  <% end %>
+  <% if @device.is_3v %>
+    ✅ 3V
+  <% end %>
+  <% if @device.is_5v %>
+    ✅ 5V
+  <% end %>
+</p>
+<% end %>
+
 <% if @device.datasheet.present? %>
     <p class='card-text'> 
       Datasheet:  <%=link_to  @device.datasheet, @device.datasheet %>

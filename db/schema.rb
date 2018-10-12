@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_10_173719) do
+ActiveRecord::Schema.define(version: 2018_10_12_000426) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -68,6 +68,7 @@ ActiveRecord::Schema.define(version: 2018_10_10_173719) do
     t.boolean "is_ultra_fast_speed", default: false, null: false
     t.boolean "is_spi", default: false, null: false
     t.integer "release_date"
+    t.string "library"
     t.index ["friendly_name"], name: "index_devices_on_friendly_name"
     t.index ["manufacturer"], name: "index_devices_on_manufacturer"
     t.index ["part_number"], name: "index_devices_on_part_number"
