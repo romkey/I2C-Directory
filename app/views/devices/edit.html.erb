@@ -4,3 +4,5 @@
 
 <%= link_to 'Show', @device %> |
 <%= link_to 'Back', devices_path %>
+
+<% content_for :page_title, "edit #{@device.part_number} | I2C Device Directory" %>
