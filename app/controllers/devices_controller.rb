@@ -38,7 +38,7 @@ class DevicesController < ApplicationController
       }
 
       format.rss {
-        @devices = @devices.order(created_at: :desc).limit(20)
+        @devices = Device.order(created_at: :desc).limit(20)
         render 'feed', layout: false
       }
     end

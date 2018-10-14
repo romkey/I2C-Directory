@@ -9,7 +9,7 @@ class SuggestDatasheetsJob < ApplicationJob
 
       if pages
         pages.each do |page|
-          device.datasheet_suggestions << DatasheetSuggestion.create(title: page[:title], link: page[:link], device: device)
+          device.datasheet_suggestions << DatasheetSuggestion.create(title: page[:title], link: page[:link], device: device, kind: 'datasheet')
         end
       end
 

@@ -56,10 +56,21 @@
     <%= form.text_field :datasheet, class: 'form-control'  %>
   </div>
 
-  <% if @device.datasheet_suggestions.count > 0 %>
+  <% if @device.datasheet_suggestions.where(kind: 'datasheet').count > 0 %>
   <h5>Suggested datasheets</h5>
   <ul>
-    <% @device.datasheet_suggestions.each do |datasheet| %>
+    <% @device.datasheet_suggestions.where(kind: 'datasheet').each do |datasheet| %>
+    <li><%= button_tag "Use", type: 'button', class:'btn btn-info', onclick: "useDatasheet('#{datasheet.link}')" %>
+      <%= datasheet.title %> - <a href="<%= datasheet.link %>" target="_blank"><%= datasheet.link %></a></li>
+    <% end %>
+    </ul>
+    <hr>
+  <% end %>
+
+  <% if @device.datasheet_suggestions.where(kind: 'driver').count > 0 %>
+  <h5>Suggested Drivers</h5>
+  <ul>
+    <% @device.datasheet_suggestions.where(kind: 'driver').each do |datasheet| %>
     <li><%= button_tag "Use", type: 'button', class:'btn btn-info', onclick: "useDatasheet('#{datasheet.link}')" %>
       <%= datasheet.title %> - <a href="<%= datasheet.link %>" target="_blank"><%= datasheet.link %></a></li>
     <% end %>
