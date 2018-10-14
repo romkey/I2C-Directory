@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_12_035747) do
+ActiveRecord::Schema.define(version: 2018_10_14_052922) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -70,10 +70,12 @@ ActiveRecord::Schema.define(version: 2018_10_12_035747) do
     t.boolean "is_spi", default: false, null: false
     t.integer "release_date"
     t.string "library"
+    t.boolean "scanned_drivers", default: false, null: false
     t.index ["friendly_name"], name: "index_devices_on_friendly_name"
     t.index ["manufacturer"], name: "index_devices_on_manufacturer"
     t.index ["part_number"], name: "index_devices_on_part_number"
     t.index ["scanned"], name: "index_devices_on_scanned"
+    t.index ["scanned_drivers"], name: "index_devices_on_scanned_drivers"
     t.index ["slug"], name: "index_devices_on_slugs"
     t.index ["suggestion"], name: "index_devices_on_suggestion"
     t.index ["views"], name: "index_devices_on_views"

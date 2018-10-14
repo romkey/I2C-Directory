@@ -4,7 +4,7 @@ class SuggestDriversJob < ApplicationJob
   queue_as :default
 
   def perform(*args)
-    Device.needs_datasheet.where('scanned = false').limit(10).each do |device|
+    Device.needs_datasheet.where(scanned_drivers: false).limit(10).each do |device|
       pages = I2CappSearch.search_for_drivers device.part_number
 
       if pages
@@ -13,7 +13,7 @@ class SuggestDriversJob < ApplicationJob
         end
       end
 
-      device.update_attributes(scanned: true)
+      device.update_attributes(scanned_drivers: true)
     end
   end
 end
