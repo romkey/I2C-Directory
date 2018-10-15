@@ -29,6 +29,9 @@
 <% end %>
     </table>
   </div>
+</div>
+
+<div class='row'>
   <div class="col">
     <h2>Datasheet Suggestions (<%= @datasheet_suggestions.length %>)</h2>
     <table cols="2" class="table">
@@ -50,7 +53,28 @@
     </table>
   </div>
 
+  <div class="col">
+    <h2>Driver Suggestions (<%= @driver_suggestions.length %>)</h2>
+    <table cols="2" class="table">
+      <tr>
+	<th>Manufacturer</th>
+	<th>Device</th>
+	<th>Function</th>
+	<th>Datasheets</th>
+      </tr>
+<% @driver_suggestions.all.each do |device| %>
+      <tr>
+	<th><%= device.manufacturer %></th>
+	<th><%= link_to device.part_number, edit_device_path(device) %></th>
+	<th><%= device.friendly_name %></th>
+	<th><%= device.datasheet_suggestions.count %></th>
+	<th><%= link_to 'clear suggestions', "/devices/#{device.slug}/clear_suggestions" %></th>
+      </tr>
+<% end %>
+    </table>
+  </div>
 </div>
+
 <div class='row'>
   <div class="col">
     <h2>Most viewed</h2>
