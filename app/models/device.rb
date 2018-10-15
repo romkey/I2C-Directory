@@ -7,6 +7,7 @@ class Device < ApplicationRecord
   scope :suggestions, -> { where(suggestion: true) }
   scope :published, -> { where(suggestion: false) }
   scope :needs_datasheet, -> { where("datasheet = '' OR datasheet IS NULL ") }
+  scope :needs_drivers, -> { where("drivers == '[]'") }
 
   alias_method :old_as_json, :as_json
 
