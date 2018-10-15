@@ -52,6 +52,15 @@
       <%= link_to "Search Amazon for #{@device.part_number}", @device.to_amazon_link %>
     </p>
 
+<% if @device.drivers.length > 0 %>
+<h3>Drivers and resources</h3>
+<ul>
+    <% @device.drivers.each do |driver| %>
+      <li><%= link_to driver['title'], driver['link'] %></li>
+    <% end %>
+</ul>
+<% end %>
+
     <p class='card-text'>
       <h2 class='card-title'>Addresses:</h2
       <ul class="list-unstyled">

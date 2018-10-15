@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   resources :devices, param: :slug
 
   get '/devices/:slug/clear_suggestions', to: 'devices#clear_suggestions'
+  get '/devices/:slug/driver/:driver_id', to: 'devices#driver'
 
   get '/admin/clear_database', to: 'admin#clear_database'
   post '/admin/import', to: 'admin#import'

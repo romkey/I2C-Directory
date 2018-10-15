@@ -1,6 +1,6 @@
 class DevicesController < ApplicationController
-  before_action :set_device, only: [:show, :edit, :update, :destroy, :clear_suggestions ]
-  before_action :authenticate_user!, only: [ :new, :edit, :update, :destroy, :clear_suggestions ]
+  before_action :set_device, only: [:show, :edit, :update, :destroy, :clear_suggestions, :driver ]
+  before_action :authenticate_user!, only: [ :new, :edit, :update, :destroy, :clear_suggestions, :driver ]
 
   # GET /devices
   # GET /devices.json
@@ -117,6 +117,15 @@ class DevicesController < ApplicationController
     end
   end
 
+  def driver
+    driver = DatasheetSuggestion.find params[:driver_id]
+    @device.drivers.push({ title: driver.title, link: driver.link})
+    @device.save
+
+    driver.delete
+
+    redirect_back fallback_location: device_path(@device)
+  end
 
   # PATCH/PUT /devices/1
   # PATCH/PUT /devices/1.json

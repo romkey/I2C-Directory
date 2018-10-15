@@ -65,13 +65,21 @@
     <% end %>
     </ul>
     <hr>
+    <% end %>
+
+  <% if @device.drivers.length > 0 %>
+    <ul>
+    <% @device.drivers.each do |driver| %>
+      <li><%= link_to driver['title'], driver['link'] %></li>
+    <% end %>
+    </ul>
   <% end %>
 
   <% if @device.datasheet_suggestions.where(kind: 'driver').count > 0 %>
   <h5>Suggested Drivers</h5>
   <ul>
     <% @device.datasheet_suggestions.where(kind: 'driver').each do |datasheet| %>
-    <li><%= button_tag "Use", type: 'button', class:'btn btn-info', onclick: "useDatasheet('#{datasheet.link}')" %>
+    <li><%= link_to button_tag("Add driver", type: 'button', class:'btn btn-info'), "#{device_path(@device)}/driver/#{datasheet.id}" %>
       <%= datasheet.title %> - <a href="<%= datasheet.link %>" target="_blank"><%= datasheet.link %></a></li>
     <% end %>
     </ul>
