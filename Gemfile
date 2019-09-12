@@ -43,7 +43,7 @@ gem 'jquery-rails'
 
 gem 'font-awesome-rails'
 
-gem 'devise'
+gem 'devise', '>= 4.7.1'
 gem 'dotenv-rails'
 
 gem 'high_voltage'
