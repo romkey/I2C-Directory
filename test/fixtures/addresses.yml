@@ -2,6 +2,14 @@
 
 one:
   address: 1
+  slug: MyString
+  notes: MyString
+  reserved: false
+  views: 1
 
 two:
-  address: 1
+  address: 2
+  slug: MyString
+  notes: MyString
+  reserved: false
+  views: 1

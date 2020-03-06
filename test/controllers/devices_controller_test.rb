@@ -17,7 +17,7 @@ class DevicesControllerTest < ActionDispatch::IntegrationTest
 
   test "should create device" do
     assert_difference('Device.count') do
-      post devices_url, params: { device: { adafruit: @device.adafruit, addresses: @device.addresses, amazon: @device.amazon, datasheet: @device.datasheet, friendly_name: @device.friendly_name, part_number: @device.part_number, sparkfun: @device.sparkfun } }
+      post devices_url, params: { device: { adafruit: @device.adafruit, amazon: @device.amazon, datasheet: @device.datasheet, friendly_name: @device.friendly_name, part_number: @device.part_number, sparkfun: @device.sparkfun } }
     end
 
     assert_redirected_to device_url(Device.last)
@@ -34,7 +34,7 @@ class DevicesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update device" do
-    patch device_url(@device), params: { device: { adafruit: @device.adafruit, addresses: @device.addresses, amazon: @device.amazon, datasheet: @device.datasheet, friendly_name: @device.friendly_name, part_number: @device.part_number, sparkfun: @device.sparkfun } }
+    patch device_url(@device), params: { device: { adafruit: @device.adafruit, amazon: @device.amazon, datasheet: @device.datasheet, friendly_name: @device.friendly_name, part_number: @device.part_number, sparkfun: @device.sparkfun } }
     assert_redirected_to device_url(@device)
   end
 

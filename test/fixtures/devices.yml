@@ -1,19 +1,45 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
+  slug: MyString
   part_number: MyString
   friendly_name: MyString
-  addresses: 
   datasheet: MyString
   adafruit: MyString
   sparkfun: MyString
   amazon: MyString
+  obsolete: false
+  suggestion: false
+  is_5v: false
+  is_3v: false
+  is_standard_speed: false
+  is_full_speed: false
+  is_high_speed: false
+  is_ultra_fast_speed: false
+  is_spi: false
+  release_date: 2005
+  scanned_drivers: false
+  drivers: {}
+  views: 0
 
 two:
+  slug: MyString
   part_number: MyString
   friendly_name: MyString
-  addresses: 
   datasheet: MyString
   adafruit: MyString
   sparkfun: MyString
   amazon: MyString
+  obsolete: true
+  suggestion: true
+  is_5v: true
+  is_3v: true
+  is_standard_speed: true
+  is_full_speed: true
+  is_high_speed: true
+  is_ultra_fast_speed: true
+  is_spi: true
+  release_date: 2005
+  scanned_drivers: true
+  drivers: {}
+  views: 0
