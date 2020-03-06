@@ -12,7 +12,8 @@ class DevicesControllerTest < ActionDispatch::IntegrationTest
 
   test "should get new" do
     get new_device_url
-    assert_response :success
+    assert_redirected_to new_user_session_url
+#    assert_response :success
   end
 
   test "should create device" do
