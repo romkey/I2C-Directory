@@ -7,42 +7,51 @@ class ResourcesControllerTest < ActionDispatch::IntegrationTest
 
   test "should get index" do
     get resources_url
-    assert_response :success
+    assert_redirected_to new_user_session_url
+#   assert_response :success
   end
 
   test "should get new" do
     get new_resource_url
-    assert_response :success
+    assert_redirected_to new_user_session_url
+#    assert_response :success
   end
 
   test "should create resource" do
-    assert_difference('Resource.count') do
+    assert_difference('Resource.count', 0) do
+#    assert_difference('Resource.count') do
       post resources_url, params: { resource: { link: @resource.link, title: @resource.title } }
     end
 
-    assert_redirected_to resource_url(Resource.last)
+    assert_redirected_to new_user_session_url
+#    assert_redirected_to resource_url(Resource.last)
   end
 
   test "should show resource" do
     get resource_url(@resource)
-    assert_response :success
+    assert_redirected_to new_user_session_url
+#    assert_response :success
   end
 
   test "should get edit" do
     get edit_resource_url(@resource)
-    assert_response :success
+    assert_redirected_to new_user_session_url
+#    assert_response :success
   end
 
   test "should update resource" do
     patch resource_url(@resource), params: { resource: { link: @resource.link, title: @resource.title } }
-    assert_redirected_to resource_url(@resource)
+    assert_redirected_to new_user_session_url
+#    assert_redirected_to resource_url(@resource)
   end
 
   test "should destroy resource" do
-    assert_difference('Resource.count', -1) do
+    assert_difference('Resource.count', 0) do
+#    assert_difference('Resource.count', -1) do
       delete resource_url(@resource)
     end
 
-    assert_redirected_to resources_url
+    assert_redirected_to new_user_session_url
+#    assert_redirected_to resources_url
   end
 end

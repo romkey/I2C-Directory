@@ -12,15 +12,18 @@ class AddressesControllerTest < ActionDispatch::IntegrationTest
 
   test "should get new" do
     get new_address_url
-    assert_response :success
+    assert_redirected_to new_user_session_url
+#    assert_response :success
   end
 
   test "should create address" do
-    assert_difference('Address.count') do
+    assert_difference('Address.count', 0) do
+#    assert_difference('Address.count') do
       post addresses_url, params: { address: { address: @address.address } }
     end
 
-    assert_redirected_to address_url(Address.last)
+    assert_redirected_to new_user_session_url
+#    assert_redirected_to address_url(Address.last)
   end
 
   test "should show address" do
@@ -30,19 +33,23 @@ class AddressesControllerTest < ActionDispatch::IntegrationTest
 
   test "should get edit" do
     get edit_address_url(@address)
-    assert_response :success
+    assert_redirected_to new_user_session_url
+#    assert_response :success
   end
 
   test "should update address" do
     patch address_url(@address), params: { address: { address: @address.address } }
-    assert_redirected_to address_url(@address)
+    assert_redirected_to new_user_session_url
+#    assert_redirected_to address_url(@address)
   end
 
   test "should destroy address" do
-    assert_difference('Address.count', -1) do
+    assert_difference('Address.count', 0) do
+#    assert_difference('Address.count', -1) do
       delete address_url(@address)
     end
 
-    assert_redirected_to addresses_url
+    assert_redirected_to new_user_session_url
+#    assert_redirected_to addresses_url
   end
 end
