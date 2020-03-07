@@ -70,15 +70,14 @@ class DevicesController < ApplicationController
     respond_to do |format|
       unless @device.suggestion? || user_signed_in?
         format.html { redirect_to devices_path, notice: 'Not created, user not signed in' }
-        return
-      end
-
-      if @device.save
-        format.html { redirect_to @device, notice: 'Device was successfully created.' }
-        format.json { render :show, status: :created, location: @device }
-      else
-        format.html { render :new }
-        format.json { render json: @device.errors, status: :unprocessable_entity }
+      else 
+        if @device.save
+          format.html { redirect_to @device, notice: 'Device was successfully created.' }
+          format.json { render :show, status: :created, location: @device }
+        else
+          format.html { render :new }
+          format.json { render json: @device.errors, status: :unprocessable_entity }
+        end
       end
     end
 
