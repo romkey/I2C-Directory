@@ -19,7 +19,6 @@ one:
   is_spi: false
   release_date: 2005
   scanned_drivers: false
-  drivers: {}
   views: 0
 
 two:
@@ -41,5 +40,4 @@ two:
   is_spi: true
   release_date: 2005
   scanned_drivers: true
-  drivers: {}
   views: 0

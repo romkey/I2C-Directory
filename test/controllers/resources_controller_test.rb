@@ -7,7 +7,7 @@ class ResourcesControllerTest < ActionDispatch::IntegrationTest
 
   test "should get index" do
     get resources_url
-    assert_redirected_to new_user_session_url
+    assert_response :success    
   end
 
   test "should get new" do
