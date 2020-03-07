@@ -69,7 +69,7 @@ class DevicesController < ApplicationController
 
     respond_to do |format|
       unless @device.suggestion? || user_signed_in?
-        format.html { redirect_to devices_path, notice: 'Not created, user not signed in' }
+        format.html { redirect_to new_user_session_path, notice: 'Not created, user not signed in' }
       else 
         if @device.save
           format.html { redirect_to @device, notice: 'Device was successfully created.' }
