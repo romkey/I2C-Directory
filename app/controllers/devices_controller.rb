@@ -67,12 +67,12 @@ class DevicesController < ApplicationController
   def create
     @device = Device.new(device_params)
 
-    unless @device.suggestion? || user_signed_in?
-      format.html { redirect_to devices_path, notice: 'Not created, user not signed in' }
-      return
-    end
-
     respond_to do |format|
+      unless @device.suggestion? || user_signed_in?
+        format.html { redirect_to devices_path, notice: 'Not created, user not signed in' }
+        return
+      end
+
       if @device.save
         format.html { redirect_to @device, notice: 'Device was successfully created.' }
         format.json { render :show, status: :created, location: @device }

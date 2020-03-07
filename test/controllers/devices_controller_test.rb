@@ -22,7 +22,8 @@ class DevicesControllerTest < ActionDispatch::IntegrationTest
       post devices_url, params: { device: { adafruit: @device.adafruit, amazon: @device.amazon, datasheet: @device.datasheet, friendly_name: @device.friendly_name, part_number: @device.part_number, sparkfun: @device.sparkfun, slug: @device.slug, obsolete: @device.obsolete, suggestion: @device.suggestion, is_5v: @device.is_5v, is_3v: @device.is_3v, is_standard_speed: @device.is_standard_speed, is_full_speed: @device.is_full_speed, is_high_speed: @device.is_high_speed, is_ultra_fast_speed: @device.is_ultra_fast_speed, is_spi: @device.is_spi, release_date: @device.release_date, scanned_drivers: @device.scanned_drivers, views: @device.views } }
     end
 
-    assert_redirected_to device_url(Device.last)
+    assert_redirected_to new_user_session_url
+#    assert_redirected_to device_url(Device.last)
   end
 
   test "should show device" do
