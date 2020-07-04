@@ -23,7 +23,7 @@
 <% @suggestions.each do |device| %>
       <tr>
 	<th><%= device.manufacturer %></th>
-	<th><%= link_to device.part_number, device %></th>
+	<th><%= link_to device.friendly_name, device  %></th>
 	<th><%= device.friendly_name %></th>
       </tr>
 <% end %>
