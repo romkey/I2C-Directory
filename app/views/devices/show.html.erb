@@ -6,6 +6,10 @@
 <% end %>
     <div class='card-subtitle'><h3 class='card-title'><%= @device.friendly_name %></h3></div>
 
+<% if @device.suggestion? %>
+  <strong>SUGGESTION</strong>
+<% end %>
+
 <% if @device.release_date %>
 <p class='card-text'>    
   Release year: <%= @device.release_date %>
