@@ -23,7 +23,7 @@
 <% @suggestions.each do |device| %>
       <tr>
 	<th><%= device.manufacturer %></th>
-	<th><%= "<a href='/devices/#{device.slug}'>#{device.friendly_name}</a>" %></th>
+	<th><a href='/devices/<%= device.slug %>'><%= device.friendly_name %></a></th>
 	<th><%= device.friendly_name %></th>
       </tr>
 <% end %>
