@@ -38,7 +38,7 @@ gem 'pg'
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'nokogiri'
 
-gem "bootstrap", ">= 4.3.1"
+gem "bootstrap", "~> 4.6.0"
 gem 'jquery-rails'
 
 gem 'font-awesome-rails'
