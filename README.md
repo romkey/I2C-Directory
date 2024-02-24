@@ -1,24 +1,5 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This repository contains the source code for an I2C Directory application, written in Ruby. The website is hosted at https://i2cdevices.org/.
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Requests to add I2C devices can be submitted via the "Suggest a device" button on the [I2C Device List](https://i2cdevices.org/devices) page.
