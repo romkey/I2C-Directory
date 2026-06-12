@@ -1,4 +1,4 @@
-require 'I2CappSearch/search'
+require "I2CappSearch/search"
 
 module I2CappSearch
   def self.search_for_drivers(part_number)

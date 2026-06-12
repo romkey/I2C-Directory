@@ -1,0 +1,104 @@
+---
+alwaysApply: true
+---
+# Deployment Rules
+
+These rules govern how code is reviewed, merged, and deployed in this repository.
+They apply to all contributors, including AI coding assistants.
+
+---
+
+## Branch Model
+
+| Branch    | Purpose                          | Protected |
+|-----------|----------------------------------|-----------|
+| `main`    | Production — deployed automatically on merge | Yes — no direct push |
+| `staging` | Integration target — deployed automatically on merge | Yes — PRs required |
+| `feature/*` / `fix/*` | Developer working branches — deleted after merge | No |
+
+---
+
+## The Rules
+
+### 1. No direct pushes to `main` or `staging`
+All changes must arrive via pull request. Branch protection enforces this.
+
+### 2. All work branches target `staging`
+Open PRs from your feature or fix branch into `staging`, not `main`.
+
+### 3. PRs require at least one approval
+A reviewer other than the author must approve before merging.
+For small teams: if no review is possible within 48 hours and the change is low-risk,
+the author may self-merge with a note explaining why.
+
+### 4. Staging is always deployable
+Do not merge broken or half-finished work into `staging`.
+Use a Draft PR to share work-in-progress without triggering a review or merge.
+
+### 5. Production is promoted from staging, not deployed directly
+To release to production, open a PR from `staging` → `main`.
+Get one approval. Merge. GitHub Actions handles the rest.
+
+### 6. Hotfixes are the only exception
+If production is broken and urgent:
+- Branch from `main` (e.g. `hotfix/brief-description`)
+- PR directly into `main` — bypass staging if necessary
+- After merging, open a follow-up PR from `main` → `staging` to re-sync
+
+### 7. Never commit secrets
+No passwords, API keys, tokens, or credentials belong in the repository.
+Use GitHub Actions Secrets for CI/CD credentials.
+Use server-side environment variables for runtime secrets.
+
+### 8. Delete branches after merging
+Keep the branch list clean. GitHub can be configured to do this automatically.
+
+---
+
+## What Happens on Merge
+
+| Event              | Docker image tag       | Deploys to        |
+|--------------------|------------------------|-------------------|
+| Push to `staging`  | `:staging`             | Staging server    |
+| Merge to `main`    | `:latest` + `:vX.Y.Z`  | Production server |
+
+---
+
+## PR Checklist
+
+Before opening a PR, confirm:
+- [ ] The branch is up to date with `staging` (or `main` for hotfixes)
+- [ ] The change does what the PR title says
+- [ ] No secrets are included
+- [ ] The app runs locally (or in a dev environment) without errors
+- [ ] The PR description explains *what* changed and *why*
+
+---
+
+## Merging Strategy
+
+Use **Squash and Merge** for feature/fix PRs into `staging`.
+Use **Merge Commit** for the `staging` → `main` release PR (preserves history).
+
+---
+
+## Notes for AI Assistants
+
+- Never suggest pushing directly to `main` or `staging`
+- Always recommend opening a PR with a clear description
+- Treat secrets in code as a hard blocker — flag immediately, do not proceed
+- When helping with CI/CD changes, respect the two-workflow model:
+  one workflow for staging, one for production
+- If asked to "deploy" something, clarify whether staging or production is intended
+
+## Versioning
+
+This project uses semantic versioning (MAJOR.MINOR.PATCH).
+
+The canonical version lives in `VERSION` (a plain text file in the root).
+
+When opening a release PR (staging → main):
+- Bump the version following semver: patch for fixes, minor for new features, major for breaking changes
+- The merge to main will automatically tag the commit and build a versioned Docker image
+
+The version is available to the application as the `APP_VERSION` environment variable.

@@ -1,128 +1,135 @@
-<%= form_with(model: device, local: true) do |form| %>
+<%= form_with(model: device, data: { controller: "datasheet" }) do |form| %>
   <% if device.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(device.errors.count, "error") %> prohibited this device from being saved:</h2>
-
-      <ul>
-      <% device.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
+    <div class="alert alert-danger">
+      <h2 class="h6"><%= pluralize(device.errors.count, "error") %> prohibited this device from being saved:</h2>
+      <ul class="mb-0">
+        <% device.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
       </ul>
     </div>
   <% end %>
 
-<% if @suggestion %>
-<p>Please enter as much information as you have about the device. After you submit it, we will review it and add it to the directory as appropriate.</p>
-<%= form.hidden_field :suggestion, value: 1 %>
-<% end %>
+  <% if @suggestion %>
+    <p>Please enter as much information as you have about the device. After you submit it, we will review it and add it to the directory as appropriate.</p>
+    <%= form.hidden_field :suggestion, value: 1 %>
+  <% end %>
 
-  <div class="field form-group">
-    <%= form.label :part_number %>
-    <%= form.text_field :part_number, class: 'form-control' %>
+  <div class="mb-3">
+    <%= form.label :part_number, class: "form-label" %>
+    <%= form.text_field :part_number, class: "form-control" %>
   </div>
 
-  <div class="field form-group">
-    <%= form.label :friendly_name %>
-    <%= form.text_field  :friendly_name, class: 'form-control'  %>
+  <div class="mb-3">
+    <%= form.label :friendly_name, class: "form-label" %>
+    <%= form.text_field :friendly_name, class: "form-control" %>
   </div>
 
-  <div class="field form-group">
-    <%= form.label :manufacturer %>
-    <%= form.text_field :manufacturer, class: 'form-control'  %>
+  <div class="mb-3">
+    <%= form.label :manufacturer, class: "form-label" %>
+    <%= form.text_field :manufacturer, class: "form-control" %>
   </div>
 
   <div class="form-check">
-    <%= form.check_box :obsolete, class: 'form-check-input' %>
-    <%= form.label 'Obsolete?', class: 'form-check-label' %>
-  </div>  
-
-  <div class="form-check">
-    <%= form.check_box :is_spi, class: 'form-check-input'  %>
-    <%= form.label 'SPI?', class: 'form-check-label'  %>
-  </div>  
-
-  <div class='form-check form-check-inline'>
-    <%= form.label '3V?', class: 'form-check-label' %>
-    <%= form.check_box :is_3v, class: 'form-check-input'  %>
-  </div>  
-
-  <div class='form-check form-check-inline'>
-    <%= form.label '5V?', class: 'form-check-label' %>
-    <%= form.check_box :is_5v, class: 'form-check-input'  %>
-  </div>  
-
-  <div class="field form-group">
-    <%= form.label :datasheet %>
-    <%= form.text_field :datasheet, class: 'form-control'  %>
+    <%= form.check_box :obsolete, class: "form-check-input" %>
+    <%= form.label :obsolete, "Obsolete?", class: "form-check-label" %>
   </div>
 
-  <% if @device.datasheet_suggestions.where(kind: 'datasheet').count > 0 %>
-  <h5>Suggested datasheets</h5>
-  <ul>
-    <% @device.datasheet_suggestions.where(kind: 'datasheet').each do |datasheet| %>
-    <li><%= button_tag "Use", type: 'button', class:'btn btn-info', onclick: "useDatasheet('#{datasheet.link}')" %>
-      <%= datasheet.title %> - <a href="<%= datasheet.link %>" target="_blank"><%= datasheet.link %></a></li>
-    <% end %>
-    </ul>
-    <hr>
-    <% end %>
+  <div class="form-check">
+    <%= form.check_box :is_spi, class: "form-check-input" %>
+    <%= form.label :is_spi, "SPI?", class: "form-check-label" %>
+  </div>
 
-  <% if @device.drivers.length > 0 %>
+  <div class="form-check form-check-inline">
+    <%= form.check_box :is_3v, class: "form-check-input" %>
+    <%= form.label :is_3v, "3V?", class: "form-check-label" %>
+  </div>
+
+  <div class="form-check form-check-inline">
+    <%= form.check_box :is_5v, class: "form-check-input" %>
+    <%= form.label :is_5v, "5V?", class: "form-check-label" %>
+  </div>
+
+  <div class="mb-3 mt-3">
+    <%= form.label :datasheet, class: "form-label" %>
+    <%= form.text_field :datasheet, class: "form-control", data: { datasheet_target: "field" } %>
+  </div>
+
+  <% if @device.datasheet_suggestions.where(kind: "datasheet").count.positive? %>
+    <h5>Suggested datasheets</h5>
     <ul>
-    <% @device.drivers.each do |driver| %>
-      <li><%= link_to driver['title'], driver['link'] %></li>
-    <% end %>
-    </ul>
-  <% end %>
-
-  <% if @device.datasheet_suggestions.where(kind: 'driver').count > 0 %>
-  <h5>Suggested Drivers</h5>
-  <ul>
-    <% @device.datasheet_suggestions.where(kind: 'driver').each do |datasheet| %>
-    <li><%= link_to button_tag("Add driver", type: 'button', class:'btn btn-info'), "#{device_path(@device)}/driver/#{datasheet.id}" %>
-      <%= datasheet.title %> - <a href="<%= datasheet.link %>" target="_blank"><%= datasheet.link %></a></li>
-    <% end %>
+      <% @device.datasheet_suggestions.where(kind: "datasheet").each do |datasheet| %>
+        <li>
+          <%= button_tag "Use", type: "button", class: "btn btn-sm btn-outline-secondary",
+                data: { action: "datasheet#use", datasheet_link_param: datasheet.link } %>
+          <%= datasheet.title %> &mdash; <%= link_to datasheet.link, datasheet.link, target: "_blank", rel: "noopener" %>
+        </li>
+      <% end %>
     </ul>
     <hr>
   <% end %>
 
-  <div class="field form-group">
-    <%= form.label :adafruit %>
-    <%= form.text_field :adafruit, class: 'form-control'  %>
+  <% if @device.drivers.length.positive? %>
+    <ul>
+      <% @device.drivers.each do |driver| %>
+        <li><%= link_to driver["title"], driver["link"] %></li>
+      <% end %>
+    </ul>
+  <% end %>
+
+  <% if @device.datasheet_suggestions.where(kind: "driver").count.positive? %>
+    <h5>Suggested drivers</h5>
+    <ul>
+      <% @device.datasheet_suggestions.where(kind: "driver").each do |datasheet| %>
+        <li>
+          <%= link_to "Add driver", "#{device_path(@device)}/driver/#{datasheet.id}", class: "btn btn-sm btn-outline-secondary" %>
+          <%= datasheet.title %> &mdash; <%= link_to datasheet.link, datasheet.link, target: "_blank", rel: "noopener" %>
+        </li>
+      <% end %>
+    </ul>
+    <hr>
+  <% end %>
+
+  <div class="mb-3">
+    <%= form.label :adafruit, class: "form-label" %>
+    <%= form.text_field :adafruit, class: "form-control" %>
   </div>
 
-  <div class="field form-group">
-    <%= form.label :sparkfun %>
-    <%= form.text_field :sparkfun, class: 'form-control'  %>
+  <div class="mb-3">
+    <%= form.label :sparkfun, class: "form-label" %>
+    <%= form.text_field :sparkfun, class: "form-control" %>
   </div>
 
-  <div class="field form-group">
-    <%= form.label :amazon %>
-    <%= form.text_field :amazon, class: 'form-control'  %>
+  <div class="mb-3">
+    <%= form.label :amazon, class: "form-label" %>
+    <%= form.text_field :amazon, class: "form-control" %>
   </div>
 
-  <div class="field form-group">
-    <%= form.label "Release year" %>
-    <%= form.number_field :release_date, class: 'form-control', min: 1982, max: 2025 %>
+  <div class="mb-3">
+    <%= form.label :release_date, "Release year", class: "form-label" %>
+    <%= form.number_field :release_date, class: "form-control", min: 1982, max: Date.current.year %>
   </div>
 
-
-  <div class="field form-group">
-    <%= form.label 'I2C Addresses' %><br/>
-    <%= form.collection_check_boxes :address_ids, Address.where(reserved: false).order(address: :asc), :id, :to_s, class: 'form-check-inline'  do |b|
-	b.label(class: "form-check-label-inline") { (b.text + ' ' + b.check_box(class: "form-check-inline")).html_safe }
-	end
-	%>
+  <div class="mb-3">
+    <%= form.label :address_ids, "I2C Addresses", class: "form-label" %>
+    <div>
+      <%= form.collection_check_boxes :address_ids, Address.where(reserved: false).order(address: :asc), :id, :to_s do |b| %>
+        <div class="form-check form-check-inline">
+          <%= b.check_box(class: "form-check-input") %>
+          <%= b.label(class: "form-check-label") %>
+        </div>
+      <% end %>
+    </div>
   </div>
 
-<% if user_signed_in? %>
-  <div class="field form-group">
-    <%= form.label 'Suggestion' %>
-    <%= form.check_box :suggestion, class: 'form-control' %>
-  </div>
-<% end %>
+  <% if user_signed_in? %>
+    <div class="form-check mb-3">
+      <%= form.check_box :suggestion, class: "form-check-input" %>
+      <%= form.label :suggestion, class: "form-check-label" %>
+    </div>
+  <% end %>
 
-  <div class="actions">
-    <button type="submit" class="btn btn-primary">Update Device</button>
+  <div>
+    <%= form.submit (device.persisted? ? "Update Device" : "Create Device"), class: "btn btn-primary" %>
   </div>
 <% end %>

@@ -1,20 +1,23 @@
-# set defaults for development and testing under Docker
-# production will need to work with Heroku
-docker-default: &docker-default
+# PostgreSQL configuration.
+#
+# Development and test connect to the Dockerized "postgresql" service.
+# Production uses DATABASE_URL from the environment.
+default: &default
   adapter: postgresql
-  encoding: utf8
-  host: postgres
-  username: postgres
-  password:
-  pool: 5
+  encoding: unicode
+  host: <%= ENV.fetch("DATABASE_HOST", "postgresql") %>
+  username: <%= ENV.fetch("DATABASE_USERNAME", "postgres") %>
+  password: <%= ENV["DATABASE_PASSWORD"] %>
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
 development:
-  <<: *docker-default
+  <<: *default
   database: i2capp_development
 
 test:
-  <<: *docker-default
+  <<: *default
   database: i2capp_test
 
 production:
-  encoding: utf8
+  <<: *default
+  url: <%= ENV["DATABASE_URL"] %>

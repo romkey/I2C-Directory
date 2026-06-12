@@ -16,16 +16,15 @@ ActiveRecord::Schema.define(version: 2019_04_13_171754) do
   enable_extension "plpgsql"
 
   create_table "addresses", force: :cascade do |t|
-    t.string "slug", null: false
     t.integer "address", null: false
-    t.string "notes", default: "", null: false
     t.boolean "reserved", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "notes", default: "", null: false
+    t.string "slug", null: false
     t.integer "views", default: 0, null: false
     t.index ["address"], name: "index_addresses_on_address"
     t.index ["notes"], name: "index_addresses_on_notes"
-    t.index ["slug"], name: "index_addresses_on_slugs"
     t.index ["views"], name: "index_addresses_on_views"
   end
 
@@ -45,13 +44,8 @@ ActiveRecord::Schema.define(version: 2019_04_13_171754) do
   end
 
   create_table "devices", force: :cascade do |t|
-    t.string "slug", null: false
     t.string "part_number", null: false
     t.string "friendly_name", null: false
-    t.string "manufacturer", default: "", null: false
-    t.boolean "obsolete"
-    t.string "attribution"
-    t.boolean "suggestion", default: false, null: false
     t.string "datasheet"
     t.string "adafruit"
     t.string "sparkfun"
@@ -59,24 +53,28 @@ ActiveRecord::Schema.define(version: 2019_04_13_171754) do
     t.integer "views", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "obsolete"
+    t.string "attribution"
+    t.string "manufacturer", default: "", null: false
+    t.boolean "suggestion", default: false, null: false
+    t.string "slug", null: false
     t.boolean "scanned", default: false, null: false
-    t.boolean "is_5v", default: false, null: false
-    t.boolean "is_3v", default: false, null: false
-    t.boolean "is_standard_speed", default: false, null: false
-    t.boolean "is_full_speed", default: false, null: false
-    t.boolean "is_fast_speed", default: false, null: false
-    t.boolean "is_high_speed", default: false, null: false
-    t.boolean "is_ultra_fast_speed", default: false, null: false
-    t.boolean "is_spi", default: false, null: false
+    t.boolean "is_5v"
+    t.boolean "is_3v"
+    t.boolean "is_standard_speed"
+    t.boolean "is_full_speed"
+    t.boolean "is_fast_speed"
+    t.boolean "is_high_speed"
+    t.boolean "is_ultra_fast_speed"
+    t.boolean "is_spi"
     t.integer "release_date"
     t.boolean "scanned_drivers", default: false, null: false
-    t.jsonb "drivers", default: "{}", null: false
+    t.jsonb "drivers", default: [], null: false
     t.index ["friendly_name"], name: "index_devices_on_friendly_name"
     t.index ["manufacturer"], name: "index_devices_on_manufacturer"
     t.index ["part_number"], name: "index_devices_on_part_number"
     t.index ["scanned"], name: "index_devices_on_scanned"
     t.index ["scanned_drivers"], name: "index_devices_on_scanned_drivers"
-    t.index ["slug"], name: "index_devices_on_slugs"
     t.index ["suggestion"], name: "index_devices_on_suggestion"
     t.index ["views"], name: "index_devices_on_views"
   end

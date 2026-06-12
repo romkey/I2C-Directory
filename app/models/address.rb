@@ -8,7 +8,7 @@ class Address < ApplicationRecord
   end
 
   def to_slug(string)
-    string.parameterize.truncate(80, omission: '')
+    string.parameterize.truncate(80, omission: "")
   end
 
   def to_param

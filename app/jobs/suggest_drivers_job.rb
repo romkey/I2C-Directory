@@ -1,4 +1,4 @@
-require 'I2CappSearch/search_for_drivers'
+require "I2CappSearch/search_for_drivers"
 
 class SuggestDriversJob < ApplicationJob
   queue_as :default
@@ -9,11 +9,12 @@ class SuggestDriversJob < ApplicationJob
 
       if pages
         pages.each do |page|
-          device.datasheet_suggestions << DatasheetSuggestion.create(title: page[:title], link: page[:link], device: device, kind: 'driver')
+          device.datasheet_suggestions << DatasheetSuggestion.create(title: page[:title], link: page[:link],
+                                                                     device: device, kind: "driver")
         end
       end
 
-      device.update_attributes(scanned_drivers: true)
+      device.update(scanned_drivers: true)
     end
   end
 end

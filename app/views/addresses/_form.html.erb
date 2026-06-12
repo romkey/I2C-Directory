@@ -1,22 +1,24 @@
-<%= form_with(model: address, local: true) do |form| %>
+<%= form_with(model: address) do |form| %>
   <% if address.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(address.errors.count, "error") %> prohibited this address from being saved:</h2>
-
-      <ul>
-      <% address.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
+    <div class="alert alert-danger">
+      <h2 class="h6"><%= pluralize(address.errors.count, "error") %> prohibited this address from being saved:</h2>
+      <ul class="mb-0">
+        <% address.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
       </ul>
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :address %>
-    <%= form.number_field :address %>
+  <div class="mb-3">
+    <%= form.label :address, class: "form-label" %>
+    <%= form.number_field :address, class: "form-control" %>
   </div>
 
-  <div class="actions">
-    <%= form.submit %>
+  <div class="form-check mb-3">
+    <%= form.check_box :reserved, class: "form-check-input" %>
+    <%= form.label :reserved, class: "form-check-label" %>
   </div>
+
+  <%= form.submit class: "btn btn-primary" %>
 <% end %>

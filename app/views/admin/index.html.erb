@@ -1,96 +1,90 @@
-<div class="row">
-  <div class="col">
-  <h2>Import CSV file</h2>
-  <%= form_tag('/admin/import', method: :post, multipart: true) do %>
-    <div class='form-group'>
-      <label for="csv">CSV file to upload</label>
-      <%= file_field_tag 'csv', class:'form-control-file' %><br/>
+<h1 class="h3 mb-4">Admin</h1>
+
+<div class="row mb-4">
+  <div class="col-lg-6">
+    <h2 class="h5">Import CSV file</h2>
+    <%= form_with url: "/admin/import", method: :post, multipart: true do |form| %>
+      <div class="mb-3">
+        <%= form.label :csv, "CSV file to upload", class: "form-label" %>
+        <%= form.file_field :csv, class: "form-control" %>
       </div>
-    <button type="submit" class="btn btn-primary">Import file</button>
-  <% end %>
-  </form>
+      <%= form.submit "Import file", class: "btn btn-primary" %>
+    <% end %>
   </div>
 </div>
+
+<div class="row mb-4">
+  <div class="col">
+    <h2 class="h5">Suggestions (<%= @suggestions.length %>)</h2>
+    <table class="table table-sm">
+      <thead><tr><th>Manufacturer</th><th>Device</th><th>Function</th></tr></thead>
+      <tbody>
+        <% @suggestions.each do |device| %>
+          <tr>
+            <td><%= device.manufacturer %></td>
+            <td><%= link_to device.friendly_name, device %></td>
+            <td><%= device.friendly_name %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="row mb-4">
+  <div class="col-lg-6">
+    <h2 class="h5">Datasheet Suggestions (<%= @datasheet_suggestions.length %>)</h2>
+    <table class="table table-sm">
+      <thead><tr><th>Manufacturer</th><th>Device</th><th>Function</th><th>Datasheets</th><th></th></tr></thead>
+      <tbody>
+        <% @datasheet_suggestions.each do |device| %>
+          <tr>
+            <td><%= device.manufacturer %></td>
+            <td><%= link_to device.part_number, edit_device_path(device) %></td>
+            <td><%= device.friendly_name %></td>
+            <td><%= device.datasheet_suggestions.count %></td>
+            <td><%= link_to "Clear", "/devices/#{device.slug}/clear_suggestions", class: "btn btn-sm btn-outline-secondary" %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="col-lg-6">
+    <h2 class="h5">Driver Suggestions (<%= @driver_suggestions.length %>)</h2>
+    <table class="table table-sm">
+      <thead><tr><th>Manufacturer</th><th>Device</th><th>Function</th><th>Datasheets</th><th></th></tr></thead>
+      <tbody>
+        <% @driver_suggestions.each do |device| %>
+          <tr>
+            <td><%= device.manufacturer %></td>
+            <td><%= link_to device.part_number, edit_device_path(device) %></td>
+            <td><%= device.friendly_name %></td>
+            <td><%= device.datasheet_suggestions.count %></td>
+            <td><%= link_to "Clear", "/devices/#{device.slug}/clear_suggestions", class: "btn btn-sm btn-outline-secondary" %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
 <div class="row">
-  <div class="col">
-    <h2>Suggestions (<%= @suggestions.length %>)</h2>
-    <table cols="2" class="table">
-      <tr>
-	<th>Manufacturer</th>
-	<th>Device</th>
-	<th>Function</th>
-      </tr>
-<% @suggestions.each do |device| %>
-      <tr>
-	<th><%= device.manufacturer %></th>
-	<th><a href='/devices/<%= device.slug %>'><%= device.friendly_name %></a></th>
-	<th><%= device.friendly_name %></th>
-      </tr>
-<% end %>
+  <div class="col-lg-6">
+    <h2 class="h5">Most viewed</h2>
+    <table class="table table-sm">
+      <thead><tr><th>Part</th><th>Device</th><th class="text-end">Views</th></tr></thead>
+      <tbody>
+        <% @most_views.each do |device| %>
+          <tr>
+            <td><%= link_to device.part_number, device %></td>
+            <td><%= device.friendly_name %></td>
+            <td class="text-end"><%= device.views %></td>
+          </tr>
+        <% end %>
+      </tbody>
     </table>
   </div>
 </div>
 
-<div class='row'>
-  <div class="col">
-    <h2>Datasheet Suggestions (<%= @datasheet_suggestions.length %>)</h2>
-    <table cols="2" class="table">
-      <tr>
-	<th>Manufacturer</th>
-	<th>Device</th>
-	<th>Function</th>
-	<th>Datasheets</th>
-      </tr>
-<% @datasheet_suggestions.all.each do |device| %>
-      <tr>
-	<th><%= device.manufacturer %></th>
-	<th><%= link_to device.part_number, edit_device_path(device) %></th>
-	<th><%= device.friendly_name %></th>
-	<th><%= device.datasheet_suggestions.count %></th>
-	<th><%= link_to 'clear suggestions', "/devices/#{device.slug}/clear_suggestions" %></th>
-      </tr>
-<% end %>
-    </table>
-  </div>
-
-  <div class="col">
-    <h2>Driver Suggestions (<%= @driver_suggestions.length %>)</h2>
-    <table cols="2" class="table">
-      <tr>
-	<th>Manufacturer</th>
-	<th>Device</th>
-	<th>Function</th>
-	<th>Datasheets</th>
-      </tr>
-<% @driver_suggestions.all.each do |device| %>
-      <tr>
-	<th><%= device.manufacturer %></th>
-	<th><%= link_to device.part_number, edit_device_path(device) %></th>
-	<th><%= device.friendly_name %></th>
-	<th><%= device.datasheet_suggestions.count %></th>
-	<th><%= link_to 'clear suggestions', "/devices/#{device.slug}/clear_suggestions" %></th>
-      </tr>
-<% end %>
-    </table>
-  </div>
-</div>
-
-<div class='row'>
-  <div class="col">
-    <h2>Most viewed</h2>
-    <table cols="2" class="table">
-      <tr>
-	<th>Part</th>
-	<th>Device</th>
-	<th>Views</th>
-      </tr>
-<% @most_views.each do |device| %>
-      <tr>
-	<th><%= link_to device.part_number, device %></th>
-	<th><%= device.friendly_name %></th>
-	<th><%= device.views %></th>
-      </tr>
-<% end %>
-    </table>
-  </div>
-</div>
+<% content_for :page_title, "Admin | I2C Device Directory" %>

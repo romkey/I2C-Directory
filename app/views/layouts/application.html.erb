@@ -1,87 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<title><%= yield(:page_title) %></title>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta http-equiv="Content-Language" content="en">
-<meta name="google-site-verification" content="xlJluXkyUnbXOykFmQ6hwwfRdQWuZCYvKeiny4K0F4I">
-<meta name="Description" content="<%= yield :page_description %>">
+  <head>
+    <title><%= content_for(:page_title) || "I2C Device Directory" %></title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Language" content="en">
+    <meta name="google-site-verification" content="xlJluXkyUnbXOykFmQ6hwwfRdQWuZCYvKeiny4K0F4I">
+    <meta name="description" content="<%= yield :page_description %>">
 
-<%= csrf_meta_tags %>
-<%= csp_meta_tag %>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
 
-<%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-<%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-<%= auto_discovery_link_tag :rss, devices_url(:format => :rss) %>
-</head>
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <%= auto_discovery_link_tag :rss, devices_url(format: :rss) %>
 
-<body>
-<div class='container'>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="/">I2C Devices</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-  <span class="navbar-toggler-icon"></span>
-  </button>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
 
-<div class="collapse navbar-collapse" id="navbarSupportedContent">
-  <ul class="navbar-nav mr-auto">
-    <li class="nav-item">
-    <%= link_to 'I2C Devices', devices_path, class: 'nav-link' %>
-    </li> 
-    <li class="nav-item">
-    <%= link_to 'I2C Addresses', addresses_path, class: 'nav-link' %>
-    </li>
-    <li class="nav-item">
-    <%= link_to 'I2C Resources', resources_path, class: 'nav-link' %>
-    </li>
-    <% if Rails.env.development? %>
-    <li class="nav-item">
-    <%= link_to 'Clear database', '/admin/clear_database', class: 'nav-link' %>
-    </li>
-    <% end %>
-    <% if user_signed_in? %>
-    <%= link_to 'Admin', '/admin', class: 'nav-link' %>
-    <%= link_to "Logout", destroy_user_session_path, method: :delete, class: 'nav-link'  %>
-    <% end %>
-  </ul>
-  <form class="form-inline my-2 my-lg-0" action="/devices">
-  <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="q">
-  <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-  </form>
-</div>
-</nav>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-lg bg-body-tertiary border-bottom">
+        <div class="container">
+          <%= link_to "I2C Devices", root_path, class: "navbar-brand" %>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
 
-<% if notice %>
-<div class="alert alert-primary" role="alert">
-  <p id="notice"><%= notice %></p>
-</div>
-<% end %>
+          <div class="collapse navbar-collapse" id="mainNav">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item"><%= link_to "Devices", devices_path, class: "nav-link" %></li>
+              <li class="nav-item"><%= link_to "Addresses", addresses_path, class: "nav-link" %></li>
+              <li class="nav-item"><%= link_to "Resources", resources_path, class: "nav-link" %></li>
+              <% if user_signed_in? %>
+                <li class="nav-item"><%= link_to "Admin", admin_path, class: "nav-link" %></li>
+                <li class="nav-item"><%= button_to "Logout", destroy_user_session_path, method: :delete, class: "btn btn-link nav-link" %></li>
+              <% end %>
+            </ul>
 
-<%= yield %>
+            <%= form_with url: devices_path, method: :get, class: "d-flex", data: { turbo_frame: "_top" } do |form| %>
+              <%= form.search_field :q, placeholder: "Search", "aria-label": "Search", class: "form-control me-2" %>
+              <%= form.submit "Search", class: "btn btn-outline-secondary" %>
+            <% end %>
+          </div>
+        </div>
+      </nav>
+    </header>
 
-</div>
-<footer>
-<div class='container'>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <ul class="navbar-nav mr-auto">
-    <li class="nav-item">
-    <%= link_to 'About', '/about', class: 'nav-link' %>
-    </li> 
-    <li class="nav-item">
-    <%= link_to 'Contact', '/contact', class: 'nav-link' %>
-    </li> 
-    <li class="nav-item">
-    <%= link_to 'Source Code', 'https://github.com/romkey/I2C-Directory', class: 'nav-link' %>
-    </li>
-    <li class="nav-item">
-    <%= link_to 'ESP8266/ESP32 I2C Scanner', 'https://github.com/romkey/ESP-Diagnostic-Tool', class: 'nav-link' %>
-    </li>
-  </ul>
-</div>
-</nav>
-</footer>
-</body>
+    <main class="container my-4">
+      <% if notice %>
+        <div class="alert alert-info" role="alert"><%= notice %></div>
+      <% end %>
+      <% if alert %>
+        <div class="alert alert-warning" role="alert"><%= alert %></div>
+      <% end %>
+
+      <%= yield %>
+    </main>
+
+    <footer class="border-top py-3 mt-4">
+      <div class="container">
+        <ul class="nav">
+          <li class="nav-item"><%= link_to "About", about_path, class: "nav-link px-2 text-secondary" %></li>
+          <li class="nav-item"><%= link_to "Contact", contact_path, class: "nav-link px-2 text-secondary" %></li>
+          <li class="nav-item"><%= link_to "Source Code", "https://github.com/romkey/I2C-Directory", class: "nav-link px-2 text-secondary" %></li>
+          <li class="nav-item"><%= link_to "ESP8266/ESP32 I2C Scanner", "https://github.com/romkey/ESP-Diagnostic-Tool", class: "nav-link px-2 text-secondary" %></li>
+        </ul>
+      </div>
+    </footer>
+  </body>
 </html>
-
-<% content_for :page_title, "I2C Device Directory" %>

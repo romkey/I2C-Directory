@@ -1,0 +1,42 @@
+---
+description: Docker and GitHub Actions CI/CD conventions
+globs: "{Dockerfile,Dockerfile.*,docker-compose.*.yml,.github/workflows/**}"
+alwaysApply: false
+---
+
+# Docker and CI
+
+## Docker
+
+- **Base image:** `ruby:4.0.5-slim` with multi-stage build
+- **Node:** 24.x for asset compilation in production Dockerfile
+- **Yarn:** Use `yarn install --immutable` in production builds
+- **Assets:** Precompiled with `SECRET_KEY_BASE_DUMMY=1`
+- **Runtime:** Non-root `rails` user; entrypoint at `bin/docker-entrypoint`
+- **Version:** Pass `APP_VERSION` build arg from git tag in release workflow
+
+## docker-compose (split stacks)
+
+Use `-f docker-compose.<stack>.yml`; each stack sets a top-level `name:` so volumes and networks do not collide.
+
+| File | Purpose |
+|------|---------|
+| `docker-compose.dev.yml` | Local dev: Postgres + Redis + `web` + `sidekiq`. Postgres host port `5432`. |
+| `docker-compose.test.yml` | Tests: thin Ruby image, bind-mounted app, cached Bundler volume; Postgres + Redis + `test` service. |
+| `docker-compose.lint.build.yml` | Lint stack with `build:` for `Dockerfile.rubocop`. |
+| `docker-compose.lint.yml` | RuboCop using prebuilt `links_rubocop:latest`. |
+| `docker-compose.server.yml` | Prod/staging-style: external Postgres via `DATABASE_URL`; includes Redis for Sidekiq. |
+
+- **Dev startup:** `bin/dev` runs `db:prepare db:seed` and clears stale PIDs before starting the server
+- **Tests:** `docker compose -f docker-compose.test.yml run --rm test`
+- **Lint (quick):** `docker compose -f docker-compose.lint.yml run --rm rubocop`
+- **Lint (build):** `docker compose -f docker-compose.lint.build.yml run --rm rubocop`
+- **Server migrate:** `docker compose -f docker-compose.server.yml --profile tools run --rm migrate`
+
+## GitHub Actions
+
+- **ci.yml:** Push/PR to `main` and `staging`; PostgreSQL 16 and Redis 8 services; runs Brakeman, bundler-audit, RuboCop, and `bin/rails test`
+- **staging.yml:** Push to `staging`; tests then builds/pushes `:staging` image to `ghcr.io`
+- **release.yml:** Push tag `v*`; tests then builds/pushes semver + `:latest` images with `APP_VERSION` from tag
+- Uses `ruby/setup-ruby` with bundler-cache and `actions/setup-node` with yarn cache
+- Concurrency: cancels in-progress runs for the same ref

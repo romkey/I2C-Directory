@@ -1,0 +1,78 @@
+name: CI
+
+on:
+  push:
+    branches: [main, staging, master]
+  pull_request:
+    branches: [main, staging, master]
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      postgresql:
+        image: postgres:16
+        env:
+          POSTGRES_HOST_AUTH_METHOD: trust
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+      redis:
+        image: redis:8
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    env:
+      RAILS_ENV: test
+      DATABASE_HOST: localhost
+      DATABASE_USERNAME: postgres
+      REDIS_URL: redis://localhost:6379/0
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: .ruby-version
+          bundler-cache: true
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: yarn
+
+      - name: Install JavaScript dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Build CSS (Bootstrap)
+        run: yarn build:css
+
+      - name: Prepare database
+        run: bin/rails db:prepare
+
+      - name: Security scan (Brakeman)
+        # -w2 reports medium/high confidence only; -z fails the build on those.
+        run: bin/brakeman --no-pager -w2 -z
+
+      - name: Audit gems (bundler-audit)
+        run: |
+          bin/bundler-audit update
+          bin/bundler-audit check
+
+      - name: Run tests
+        run: bin/rails test

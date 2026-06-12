@@ -1,0 +1,42 @@
+---
+description: Maintain CHANGELOG.md with all functionality changes per release
+globs: CHANGELOG.md
+alwaysApply: false
+---
+
+# CHANGELOG Maintenance
+
+Update `CHANGELOG.md` when adding, changing, or removing functionality.
+
+## Format
+
+Follow [Keep a Changelog](https://keepachangelog.com/) conventions:
+
+```markdown
+## [Unreleased]
+
+### Added
+- New feature description
+
+### Changed
+- Existing feature modification
+
+### Fixed
+- Bug fix description
+
+### Removed
+- Removed feature description
+
+## [v1.2.0] - 2026-03-09
+
+### Added
+- ...
+```
+
+## Rules
+
+- New entries go under `[Unreleased]` until a version tag is pushed
+- When releasing, rename `[Unreleased]` to `[vX.Y.Z] - YYYY-MM-DD` and add a fresh `[Unreleased]` section
+- Write entries from the user's perspective, not implementation details
+- Group related changes under one bullet rather than listing every file touched
+- Reference GitHub issue/PR numbers where applicable

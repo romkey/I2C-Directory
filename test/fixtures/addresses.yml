@@ -1,15 +1,13 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  address: 1
-  slug: MyString
-  notes: MyString
+  address: 104 # 0x68
+  slug: 0x68
   reserved: false
-  views: 1
+  views: 2
 
 two:
-  address: 2
-  slug: MyString
-  notes: MyString
-  reserved: false
-  views: 1
+  address: 28 # 0x1c
+  slug: 0x1c
+  reserved: true
+  views: 0

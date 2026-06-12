@@ -1,43 +1,27 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
+# Published device with full metadata.
 one:
-  slug: MyString
-  part_number: MyString
-  friendly_name: MyString
-  datasheet: MyString
-  adafruit: MyString
-  sparkfun: MyString
-  amazon: MyString
-  obsolete: false
+  part_number: BME680
+  friendly_name: Environmental sensor
+  manufacturer: Bosch
+  slug: bme680
+  datasheet: https://example.com/bme680.pdf
+  adafruit: https://www.adafruit.com/product/3660
+  sparkfun: https://www.sparkfun.com/products/16466
+  amazon: https://www.amazon.com/dp/bme680
   suggestion: false
-  is_5v: false
-  is_3v: false
-  is_standard_speed: false
-  is_full_speed: false
-  is_high_speed: false
-  is_ultra_fast_speed: false
-  is_spi: false
-  release_date: 2005
-  scanned_drivers: false
-  views: 0
-
-two:
-  slug: MyString
-  part_number: MyString
-  friendly_name: MyString
-  datasheet: MyString
-  adafruit: MyString
-  sparkfun: MyString
-  amazon: MyString
-  obsolete: true
-  suggestion: true
-  is_5v: true
   is_3v: true
-  is_standard_speed: true
-  is_full_speed: true
-  is_high_speed: true
-  is_ultra_fast_speed: true
+  is_5v: false
   is_spi: true
-  release_date: 2005
-  scanned_drivers: true
+  release_date: 2017
+  views: 5
+
+# A user suggestion, with no datasheet (matches the needs_datasheet scope).
+two:
+  part_number: SSD1306
+  friendly_name: Monochrome OLED display
+  manufacturer: Solomon Systech
+  slug: ssd1306
+  suggestion: true
   views: 0

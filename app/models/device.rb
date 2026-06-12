@@ -16,7 +16,7 @@ class Device < ApplicationRecord
   end
 
   def to_slug(string)
-    string.parameterize.truncate(80, omission: '')
+    string.parameterize.truncate(80, omission: "")
   end
 
   def to_param
@@ -27,7 +27,7 @@ class Device < ApplicationRecord
     args[:except] = [ "id", "slug", "attribution", "created_at", "updated_at", "suggestion", "views", "scanned" ]
     result = self.old_as_json(args)
 
-    result.delete_if { |key, value| value.nil? || value == ''}
+    result.delete_if { |key, value| value.nil? || value == "" }
 
     if self.address.count
       result[:addresses] = self.address.pluck(:address)
@@ -51,6 +51,6 @@ private
       i += 1
     end
 
-    return i
+    i
   end
 end

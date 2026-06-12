@@ -8,7 +8,7 @@ class DriverSuggestions < ActiveRecord::Migration[5.2]
       t.datetime "created_at", null: false
       t.datetime "updated_at", null: false
 
-      t.index ["device_id"], name: "index_driver_suggestions_on_device_id"
+      t.index [ "device_id" ], name: "index_driver_suggestions_on_device_id"
     end
   end
 end

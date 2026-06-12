@@ -1,23 +1,24 @@
-<div class='card'>
-    <div class="card-body">
-    <h1 class='card-title'>I2C Address <%="0x%02x" % @address.address %></h1>
-    <div class='card-subtitle'><%= @address.device.count == 0 ? "No" : @address.device.count %> known devices at this address</div>
-
-    <p class='card-text'>
-      <h2 class='card-title'>Devices:</h2>
-      <ul class="list-group">
-	<% @address.device.published.order(part_number: :asc).each do |device|  %>
-  	  <li class="list-group-item">
-	    <%= link_to(device.part_number, device) %> - <%= device.friendly_name %>
-	  </li>
-	<% end %>
-      </ul>
+<div class="card">
+  <div class="card-body">
+    <h1 class="card-title">I2C Address <%= format("0x%02x", @address.address) %></h1>
+    <p class="card-subtitle text-secondary mb-3">
+      <%= @address.device.count.zero? ? "No" : @address.device.count %> known devices at this address
     </p>
+
+    <h2 class="h5">Devices</h2>
+    <ul class="list-group">
+      <% @address.device.published.order(part_number: :asc).each do |device| %>
+        <li class="list-group-item">
+          <%= link_to device.part_number, device %> &mdash; <%= device.friendly_name %>
+        </li>
+      <% end %>
+    </ul>
+
+    <% if user_signed_in? %>
+      <%= link_to "Edit", edit_address_path(@address), class: "btn btn-outline-secondary mt-3" %>
+    <% end %>
+  </div>
 </div>
 
-<% if user_signed_in? %>
-<%= link_to 'Edit', edit_address_path(@address) %>
-<% end %>
-
-<% content_for :page_title, "I2C Address #{@address.to_s} | I2C Device Directory" %>
-<% content_for :page_description, "#{@address.to_s}: I2C/TwoWire addresses, devices: #{@address.device.map { |dev|dev.part_number }.join(', ') }" %>
+<% content_for :page_title, "I2C Address #{@address} | I2C Device Directory" %>
+<% content_for :page_description, "#{@address}: I2C/TwoWire addresses, devices: #{@address.device.map(&:part_number).join(', ')}" %>

@@ -1,5 +1,4 @@
-require 'csv'
-require 'pp'
+require "csv"
 
 class AdminController < ApplicationController
   before_action :authenticate_user!
@@ -7,8 +6,8 @@ class AdminController < ApplicationController
   def index
     @most_views = Device.order(views: :desc).limit(20)
     @suggestions = Device.suggestions.order(created_at: :desc).limit(20)
-    @datasheet_suggestions = Device.where("datasheet IS NULL OR datasheet = ''").joins(:datasheet_suggestions).group('devices.id').order(:part_number)
-    @driver_suggestions = Device.where("drivers = '[]'").joins(:datasheet_suggestions).group('devices.id').order(:part_number)
+    @datasheet_suggestions = Device.where("datasheet IS NULL OR datasheet = ''").joins(:datasheet_suggestions).group("devices.id").order(:part_number)
+    @driver_suggestions = Device.where("drivers = '[]'").joins(:datasheet_suggestions).group("devices.id").order(:part_number)
   end
 
   def clear_database
@@ -26,10 +25,8 @@ class AdminController < ApplicationController
   # CSV
   # manufacturer, part number, friendly name, datasheet, addresses (space delimited)
   def import
-    pp params
-
     uploaded = params[:csv]
     count = Device.import uploaded
-    redirect_to '/devices', notice: "#{count} devices imported"
+    redirect_to "/devices", notice: "#{count} devices imported"
   end
 end

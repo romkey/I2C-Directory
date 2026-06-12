@@ -1,8 +1,10 @@
-<h1>Editing Device</h1>
+<h1 class="h3 mb-3">Editing Device</h1>
 
-<%= render 'form', device: @device %>
+<%= render "form", device: @device %>
 
-<%= link_to 'Show', @device %> |
-<%= link_to 'Back', devices_path %>
+<div class="mt-3 d-flex gap-2">
+  <%= link_to "Show", @device, class: "btn btn-link px-0" %>
+  <%= link_to "Back", devices_path, class: "btn btn-link px-0" %>
+</div>
 
-<% content_for :page_title, "edit #{@device.part_number} | I2C Device Directory" %>
+<% content_for :page_title, "Edit #{@device.part_number} | I2C Device Directory" %>
