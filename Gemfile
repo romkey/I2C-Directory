@@ -26,7 +26,7 @@ gem "csv"
 gem "nokogiri"
 
 # Authentication [https://github.com/heartcombo/devise]
-gem "devise", "~> 4.9"
+gem "devise", "~> 5.0", ">= 5.0.4"
 
 # Pagination [https://github.com/ddnexus/pagy]
 gem "pagy", "~> 9.3"

@@ -9,7 +9,7 @@ All notable changes to this project are documented here. The format is based on
 ### Changed
 - Upgraded Ruby 2.7.5 → 4.0.5 and Rails 5.2 → 8.1.
 - Updated every dependency to current versions: Puma 8, PostgreSQL 16, Redis 8,
-  Sidekiq 8 (with redis-client), Devise 4.9, Nokogiri 1.18+, and more.
+  Sidekiq 8 (with redis-client), Devise 5.0, Nokogiri 1.18+, and more.
 - Migrated the asset pipeline from Sprockets to **Propshaft** with
   **cssbundling-rails** (Bootstrap 5.3 compiled via Dart Sass), **importmap-rails**,
   **Turbo**, and **Stimulus**.
@@ -30,6 +30,11 @@ All notable changes to this project are documented here. The format is based on
 - Removed `cookieconsent2-rails`; the site only sets a strictly-necessary session
   cookie, so a consent banner is not required.
 - Removed jQuery; the datasheet "Use" button is now a Stimulus controller.
+
+### Security
+- Pinned Devise to 5.0.4 to resolve GHSA-57hq-95w6-v4fc (confirmable email
+  change race condition) and GHSA-jp94-3292-c3xv (open redirect in the
+  timeoutable session handler).
 
 ### Fixed
 - Parameterized the device search query, eliminating a SQL-injection vector.
