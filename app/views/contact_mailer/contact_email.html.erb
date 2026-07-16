@@ -1,0 +1,8 @@
+<h2>New contact message</h2>
+
+<p><strong>Name:</strong> <%= @contact.name.presence || "(not provided)" %></p>
+<p><strong>Email:</strong> <%= @contact.email %></p>
+<p><strong>Subject:</strong> <%= @contact.subject.presence || "(none)" %></p>
+
+<p><strong>Message:</strong></p>
+<p><%= simple_format(@contact.message) %></p>

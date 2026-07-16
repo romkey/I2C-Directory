@@ -1,0 +1,38 @@
+---
+description: Sidekiq and ActiveJob queue configuration rules to prevent double-prefixed queue names
+globs: config/**/production.rb, config/initializers/sidekiq.rb, app/jobs/**/*.rb
+alwaysApply: false
+---
+
+# Sidekiq Queue Configuration
+
+## No ActiveJob queue_name_prefix
+
+NEVER add `config.active_job.queue_name_prefix` in any environment config.
+This app uses a dedicated Redis instance — queue namespacing is unnecessary.
+
+```ruby
+# BAD — causes double-prefixed queues with sidekiq-cron
+config.active_job.queue_name_prefix = "member_manager_production"
+
+# GOOD — no prefix, plain queue names
+config.active_job.queue_adapter = :sidekiq
+# (no queue_name_prefix line at all)
+```
+
+## Sidekiq queue list
+
+In `config/initializers/sidekiq.rb`, use plain queue names only:
+
+```ruby
+# BAD
+config.queues = ["#{prefix}_default", "#{prefix}_mailers"]
+
+# GOOD
+config.queues = %w[default mailers]
+```
+
+## sidekiq-cron jobs
+
+All cron jobs must use `active_job: true`. Do not set an explicit `queue:`
+on cron entries — let the job class's `queue_as` determine the queue.

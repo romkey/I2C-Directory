@@ -1,86 +1,68 @@
-<div class='card'>
+<div class="card">
   <div class="card-body">
-    <h1 class='card-title'><%= @device.part_number %></h1>
-<% if @device.manufacturer.present? %>
-    <div class='card-subtitle'><h2 class='card-title'><%= @device.manufacturer %></h2></div>
-<% end %>
-    <div class='card-subtitle'><h3 class='card-title'><%= @device.friendly_name %></h3></div>
-
-<% if @device.suggestion? %>
-  <strong>SUGGESTION</strong>
-<% end %>
-
-<% if @device.release_date %>
-<p class='card-text'>    
-  Release year: <%= @device.release_date %>
-</p>
-<% end %>
-
-<p class='card-text'>
-  <b>Always confirm information before making software, design or purchasing decisions.</b>
-</p>
-
-<% if @device.is_3v || @device.is_5v || @device.is_spi %>
-<p class='card-text'>    
-  <% if @device.is_spi %>
-    ✅SPI  
-  <% end %>
-  <% if @device.is_3v %>
-    ✅3V  
-  <% end %>
-  <% if @device.is_5v %>
-    ✅5V  
-  <% end %>
-</p>
-<% end %>
-
-<% if @device.datasheet.present? %>
-    <p class='card-text'> 
-      Datasheet:  <%=link_to  @device.datasheet, @device.datasheet %>
-    </p>
-<% end %>
-
-<% if @device.adafruit.present? %>
-    <p class='card-text'> 
-      Adafruit: <%= link_to @device.adafruit, @device.adafruit %>
-    </p>
-<% end %>
-
-<% if @device.sparkfun.present? %>
-    <p class='card-text'> 
-      Sparkfun: <%= link_to @device.sparkfun, @device.sparkfun %>
-    </p>
-<% end %>
-
-    <p class='card-text'> 
-      <%= link_to "Search Amazon for #{@device.part_number}", @device.to_amazon_link %>
-    </p>
-
-<% if @device.drivers.length > 0 %>
-<h3>Drivers and resources</h3>
-<ul>
-    <% @device.drivers.each do |driver| %>
-      <li><%= link_to driver['title'], driver['link'] %></li>
+    <h1 class="card-title"><%= @device.part_number %></h1>
+    <% if @device.manufacturer.present? %>
+      <h2 class="h5 card-subtitle text-secondary mb-2"><%= @device.manufacturer %></h2>
     <% end %>
-</ul>
-<% end %>
+    <h3 class="h6 card-subtitle mb-3"><%= @device.friendly_name %></h3>
 
-    <p class='card-text'>
-      <h2 class='card-title'>Addresses:</h2
-      <ul class="list-unstyled">
-	<% @device.address.order(address: :asc).each do |addr|  %>
-	<li><%= link_to("0x%02x" % addr.address, addr) %></li>
-	<% end %>
+    <% if @device.suggestion? %>
+      <span class="badge text-bg-warning-subtle">Suggestion</span>
+    <% end %>
+
+    <% if @device.release_date %>
+      <p class="card-text">Release year: <%= @device.release_date %></p>
+    <% end %>
+
+    <p class="card-text"><strong>Always confirm information before making software, design or purchasing decisions.</strong></p>
+
+    <% if @device.is_3v || @device.is_5v || @device.is_spi %>
+      <p class="card-text">
+        <% if @device.is_spi %><span class="badge text-bg-secondary">SPI</span><% end %>
+        <% if @device.is_3v %><span class="badge text-bg-secondary">3V</span><% end %>
+        <% if @device.is_5v %><span class="badge text-bg-secondary">5V</span><% end %>
+      </p>
+    <% end %>
+
+    <% if @device.datasheet.present? %>
+      <p class="card-text">Datasheet: <%= link_to @device.datasheet, @device.datasheet %></p>
+    <% end %>
+
+    <% if @device.adafruit.present? %>
+      <p class="card-text">Adafruit: <%= link_to @device.adafruit, @device.adafruit %></p>
+    <% end %>
+
+    <% if @device.sparkfun.present? %>
+      <p class="card-text">Sparkfun: <%= link_to @device.sparkfun, @device.sparkfun %></p>
+    <% end %>
+
+    <p class="card-text"><%= link_to "Search Amazon for #{@device.part_number}", @device.to_amazon_link %></p>
+
+    <% if @device.drivers.length.positive? %>
+      <h3 class="h5">Drivers and resources</h3>
+      <ul>
+        <% @device.drivers.each do |driver| %>
+          <li><%= link_to driver["title"], driver["link"] %></li>
+        <% end %>
       </ul>
-    </p>
+    <% end %>
+
+    <h2 class="h5">Addresses</h2>
+    <ul class="list-unstyled">
+      <% @device.address.order(address: :asc).each do |addr| %>
+        <li><%= link_to format("0x%02x", addr.address), addr %></li>
+      <% end %>
+    </ul>
 
     <% if user_signed_in? %>
-      <%= link_to 'Edit', edit_device_path(@device), class: 'btn btn-info' %> <%= link_to 'Delete', device_path(@device), method: :delete, class: "btn btn-danger",  data: {confirm: "Are you sure?"} %>
+      <div class="d-flex gap-2">
+        <%= link_to "Edit", edit_device_path(@device), class: "btn btn-outline-secondary" %>
+        <%= button_to "Delete", device_path(@device), method: :delete, class: "btn btn-outline-danger",
+              form: { data: { turbo_confirm: "Are you sure?" } } %>
+      </div>
     <% end %>
-
   </div>
 </div>
 
-
 <% content_for :page_title, "#{@device.part_number} | I2C Device Directory" %>
-<% content_for :page_description, "#{@device.part_number}: #{@device.friendly_name}, I2C/TwoWire addresses: #{@device.address.map { |addr| addr.to_s }.join(', ') }" %>
+<% content_for :page_description, "#{@device.part_number}: #{@device.friendly_name}, I2C/TwoWire addresses: #{@device.address.map(&:to_s).join(', ')}" %>

@@ -1,0 +1,173 @@
+---
+description: Design rules for UI
+globs: "**/*.css", "**/*.erb", "**/*.html", "app/views/**"
+alwaysApply: true
+---
+# UI Design Rules
+
+Apply these rules to any HTML/template/CSS Cursor writes for this project. The system uses Bootstrap 5.3 with `data-bs-theme="dark"` and a custom `refresh.css` that defines the component classes referenced below.
+
+## Core principles
+
+1. **Color encodes meaning, not category.** Reserve color for: red = danger/destructive, amber = warning/needs attention, green = success/active, blue = active/selected/link. Never color-code categories of buttons (e.g., don't make "all parking buttons green"). If color isn't telling the user something specific, it shouldn't be there.
+
+2. **Dim the common case so outliers pop.** When 90%+ of values in a column are identical (statuses, amounts, dates), render the common case in muted gray and let exceptions stand out.
+
+3. **One primary action per region.** At most one filled `btn-primary` per page region. Everything else is `btn-outline-secondary`.
+
+4. **Pages should do work, not just present data.** Surface attention counts inline. Make filters surface admin problems. Lead with what the user can act on.
+
+5. **Density beats whitespace.** This is an admin tool. Body text is 12-13px in tables. Tighten padding aggressively.
+
+## Buttons
+
+- `btn-primary` — single most-used action per region only.
+- `btn-outline-secondary` — everything else.
+- `btn-danger` / `btn-outline-danger` — only for genuinely destructive actions (Delete, Ban, Remove). Destructive buttons go in a `⋯` kebab menu, never bare on the page.
+- Never use `btn-success` / `btn-warning` / `btn-info` as button color labels for categories. Use semantic meaning only.
+
+## Status indicators
+
+- 90%+ rows share a status → render a 6px colored dot (`.status-dot.status-success` etc.), no label.
+- Exceptional statuses → use a small `text-bg-*-subtle` badge with a label.
+- Never use saturated `bg-success` / `bg-danger` filled badges. Always use the `-subtle` variants.
+- ALL CAPS status pills are forbidden. Sentence case only.
+
+## Numbers and money
+
+- Right-align numeric columns with `class="num"` (tabular).
+- Zero values: `text-secondary` (muted).
+- Outlier values in a column of similar values: add `fw-medium`.
+- Money: dim repeated parts. `<span class="money num"><span class="currency">$</span>40<span class="cents">.00</span></span>` — only the dollar value is bright.
+- Never wrap counts in colored badges (e.g., `<span class="badge bg-info">42</span>`). Plain numerals.
+
+## Dates
+
+- Today: time only ("3:05 AM")
+- Yesterday: "Yesterday"
+- Within 7 days: "3 days ago"
+- Same year: "Apr 27"
+- Different year: "Apr 27, 2025"
+- Full timestamp goes in `title` attribute for hover precision.
+- System/audit timestamps (last synced, updated, created) are 12px muted, grouped in a System section at the bottom.
+
+## Filters
+
+- Multiple filters in categories → `.filter-chip` components in flex-wrap rows.
+- 2-5 filters that are KPI-like → `.kpi-tile` row.
+- Variants: default (neutral), `.active` (currently applied), `.warning` (count is admin-actionable), `.danger` (serious state), `.muted` (count is 0).
+- Show "X filters active · Clear" indicator when filters are applied.
+
+## Tables
+
+- Apply `.table-compact` class for 13px text and tight padding.
+- Headers: 11px uppercase muted with letter-spacing.
+- Whole rows clickable when there's a detail view (no separate Details button).
+- One outline action button max per row. Multiple actions → kebab menu.
+- Status columns: dot, not pill (see above).
+- Long lists need pagination at >50 rows.
+
+## Page header pattern
+
+```html
+<div class="d-flex align-items-end justify-content-between mb-3">
+  <div>
+    <h1 class="h-page-title mb-0">Page title</h1>
+    <div class="text-13 text-secondary mt-1">
+      <span class="text-body">240</span> total ·
+      <span class="text-success">179</span> active
+    </div>
+  </div>
+  <div class="d-flex gap-2">
+    <button class="btn btn-primary btn-sm">+ Primary action</button>
+    <button class="btn btn-outline-secondary btn-sm">Secondary</button>
+  </div>
+</div>
+```
+
+## Settings pages
+
+- Use sidebar layout (`.settings-nav` with categories on left, items on right) for any page with 6+ settings/items.
+- Whole rows clickable with chevron — no redundant "Manage X" buttons.
+- Surface attention counts inline (e.g., "Email templates · 18 need review").
+- Include a "⚠ Needs attention" virtual category at top of sidebar.
+- Add `⌘K` search for indexes with 10+ items.
+
+## Detail/profile pages
+
+### Hero pattern
+- Avatar 44-56px (not larger), name, inline status pills, primary contact line.
+- Action buttons in header: 1 primary, 2-3 outline, kebab for destructive/rare.
+- Breadcrumb + prev/next navigation in a small row above the hero, not as primary controls.
+
+### Field grouping
+- Group related fields under `.h-section-label` headers.
+- Default groupings: Identity / Profile / Capabilities / System.
+- System section (timestamps, IDs) at the bottom, in 12px muted type.
+
+### Right sidebar
+- Status/membership card at top with status pill in top-right corner.
+- Subsequent cards: Trained on, Documents, Resources.
+- Each card uses `.h-section-label` for its title.
+
+## Member-facing vs admin-facing views
+
+Member-facing views (member viewing their own account) differ from admin-facing views:
+
+- Admin and member views share architecture, with admin-only additions. When designing both views of the same entity (member, application, payment, etc.), the admin view should layer admin-only affordances on top of the member view's structure rather than using a different page. Hero, tab strip, field groupings, and sidebar cards stay in the same positions. Admin-only elements include override banners, expanded action buttons, per-field destructive actions, and the System section at the bottom of fields. Status pills in the admin hero may stack to surface multiple dimensions of state at once.
+
+- Use friendly second-person voice: "Your profile", "You're trained on", "Resources for you".
+- Hide all admin-only affordances: sync controls, internal IDs, audit timestamps, Login Link, Impersonate, Sponsor/Ban/Delete.
+- Empty fields use inviting placeholder text ("Tell others a bit about yourself"), not "Not provided" or "None".
+- Empty/zero states feel calm and complete ("You're all set"), not like a half-loaded dashboard.
+- Per-field inline "Edit" / "Add" links, not one big "Edit Profile" button.
+- Action buttons must be self-explanatory with descriptions — members visit rarely and need labels.
+- Membership status badge ("Active") on the Membership card, top-right corner.
+- Internal jargon (Greeting Name, Authentik ID, Sheet Entry) replaced with plain English (Display name) or removed.
+- Do not show recent activity feeds to members.
+
+## Component class reference
+
+Already defined in `refresh.css`:
+
+- `.h-page-title`, `.h-section-label` — typography
+- `.text-11`, `.text-12`, `.text-13`, `.fw-medium` — type scale
+- `.status-dot` with `.status-success/.status-danger/.status-warning/.status-muted`
+- `.filter-chip` with `.active/.warning/.danger/.muted`
+- `.kpi-tile` with `.clickable/.active/.warning`
+- `.table-compact`, `.list-compact`
+- `.settings-nav`, `.settings-nav-item` with `.active/.attention`
+- `.action-card` for labeled action grids
+- `.status-panel` with `.status-clear/.status-attention`
+- `.status-pill` with `.status-pill-active/.status-pill-attention/.status-pill-overdue`
+- `.card-membership`, `.sidebar-card`, `.cert-pill`, `.resource-link`
+- `.profile-section-header`, `.profile-field-group`, `.profile-field-row`
+- `.money` with nested `.currency/.cents`
+
+Use these classes rather than inventing new ones. If a new pattern is genuinely needed, add it to `refresh.css`, don't inline styles.
+
+## Anti-patterns — never do these
+
+- Multiple `btn-primary` buttons in one region.
+- Saturated filled badges (`bg-success`, `bg-info`, etc.) for status — always use `-subtle` variants.
+- Numbered circles (1, 2, 3) on lists that aren't sequential steps.
+- "Manage X" buttons inside a card titled "X".
+- Full timestamps where relative dates would do.
+- ALL CAPS for emphasis (use sentence case + `fw-medium`).
+- Decorative emoji as primary icons (use Bootstrap Icons `bi-*`). Emoji in action card titles is fine.
+- Long explanatory paragraphs on index/landing pages — explanations belong on destination pages.
+- Hover effects with motion (scale transforms, glows). Subtle background changes only.
+- Showing "0" or "None" / "Not provided" prominently. Mute zero states.
+- Browser storage (localStorage/sessionStorage) in artifacts — not supported.
+
+## Validation checklist
+
+For any new page, verify:
+
+- [ ] Color appears only where encoding meaning.
+- [ ] At most one `btn-primary`.
+- [ ] Repeated values in columns are muted; outliers pop.
+- [ ] Attention counts surfaced inline.
+- [ ] Body text 12-13px in tables; padding tight.
+- [ ] Mobile collapses sensibly.
+- [ ] If member-facing: voice is second person, admin affordances absent, empty states reassuring.

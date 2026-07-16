@@ -1,6 +1,6 @@
-require 'i2c_import'
+require "i2c_import"
 
-task :import => [ :environment ] do
+task import: [ :environment ] do
   results = []
 
   page = I2CImport.download_page
@@ -28,10 +28,10 @@ task :import => [ :environment ] do
         record.device << d
       end
     else
-      puts '>>>>> NO ADDRESSES??'
+      puts ">>>>> NO ADDRESSES??"
       pp item
     end
   end
 
-  File.open("i2c.json", 'w') { |f| f.write results.to_json.to_s }
+  File.open("i2c.json", "w") { |f| f.write results.to_json.to_s }
 end

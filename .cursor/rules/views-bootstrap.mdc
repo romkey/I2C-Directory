@@ -1,0 +1,27 @@
+---
+description: Bootstrap 5.3 and ERB view conventions
+globs: "**/*.erb"
+alwaysApply: false
+---
+
+# Views and Bootstrap
+
+- **Bootstrap 5.3** — use Bootstrap utility classes and components; avoid custom CSS when a utility class exists
+- **Icons:** Use `bootstrap-icons` font classes (e.g., `<i class="bi bi-pencil"></i>`)
+- **Layout:** Application layout uses a Bootstrap navbar; views use the grid system (`container`, `row`, `col-*`)
+- **Flash messages:** Styled with `bootstrap_class_for` helper from `ApplicationHelper`
+- **Pagination:** Use `pagy_bootstrap_nav` helper
+
+## Component Patterns
+
+- Modals: Use `bootstrap.Modal` JS API with Stimulus controllers
+- Tabs: Use `bootstrap.Tab` JS API
+- Tooltips: Initialize via `bootstrap.Tooltip`
+- Forms: Use Bootstrap form classes (`form-control`, `form-label`, `form-select`, `form-check`)
+
+## ERB Conventions
+
+- Use partials for repeated UI elements; prefix with underscore
+- Prefer `link_to` and `button_to` helpers over raw `<a>` and `<form>` tags
+- Use Turbo Frames and Turbo Streams for dynamic updates instead of custom JS
+- Keep view logic in helpers or presenters, not in templates

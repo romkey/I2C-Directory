@@ -1,7 +1,6 @@
 class RegistrationsController < Devise::RegistrationsController
+  before_action :one_user_registered?, only: [ :new, :create ]
 
-  before_action :one_user_registered?, only: [:new, :create]
-  
   protected
 
   def one_user_registered?
@@ -11,7 +10,6 @@ class RegistrationsController < Devise::RegistrationsController
       else
         redirect_to new_user_session_path
       end
-    end  
+    end
   end
-
 end

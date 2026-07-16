@@ -1,73 +1,73 @@
-<h1>I2C Device List <%= link_to(fa_icon('rss'), '/devices.rss') %></h1>
+<div class="d-flex align-items-center justify-content-between mb-3">
+  <h1 class="h3 mb-0">
+    I2C Device List
+    <%= link_to icon("rss"), devices_path(format: :rss), class: "text-decoration-none", title: "RSS feed" %>
+  </h1>
+  <div class="d-flex gap-2">
+    <%= link_to "Suggest a device", "/devices/suggest_new", class: "btn btn-primary" %>
+    <%= link_to "Download JSON", devices_path(format: :json), class: "btn btn-outline-secondary" %>
+    <%= link_to "Download C++", devices_path(format: :cpp), class: "btn btn-outline-secondary" %>
+  </div>
+</div>
 
-<p>
-<%= link_to 'Suggest a device', '/devices/suggest_new', class: 'btn btn-primary btn-success' %>
-<%= link_to 'Download as JSON', '/devices.json', class: 'btn btn-primary' %>
-<%= link_to 'Download I2C Scanner C++ code ', '/devices.cpp', class: 'btn btn-primary' %>
-</p>
-
-<table class='table table-striped'>
-  <thead class='thead-light'>
-    <tr>
-      <th>Part</th>
-      <th>Description</th>
-      <th>Manufacturer</th>
-      <th>Addresses</th>
-
-      <th>Datasheet</th>
-      <th>Adafruit</th>
-      <th>Sparkfun</th>
-      <th>Amazon</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @devices.each do |device| %>
+<div class="table-responsive">
+  <table class="table table-striped align-middle">
+    <thead class="table-light">
       <tr>
-        <th scope='row'><%= link_to device.part_number, device %></th>
-        <td><%= device.friendly_name %></td>
-	<td><%= device.manufacturer %></td>
-	<% if device.address.length == 0 %>
-	  <td>none</td>
-	<% elsif device.address.length == 1 %>
-          <td><%= link_to device.address.first.to_s, device.address.first %></td>
-	<% elsif device.address.length == 2 %>
-          <td><%= link_to device.address.first.to_s, device.address.first %>, <%= link_to device.address.second.to_s, device.address.second %></td>
-	<% else %>
-	  <td><%= link_to device.address.length, device %></td>
-	<% end %>
-	<% if device.datasheet.present? %>
-          <td><%= link_to fa_icon('table', class: 'fa-2x'), device.datasheet %></td>
-	<% else %>
-	  <td></td>
-	<% end %>
-	<% if device.adafruit.present? %>
-          <td><%= link_to image_tag('Adafruit-logo-64x64.png', size: '32', alt: 'See device on Adafruit'), device.adafruit %></td>
-	<% else %>
-	  <td></td>
-	<% end %>
-	<% if device.sparkfun.present? %>
-          <td><%= link_to image_tag('Sparkfun-logo-64x64.png', size: '32', alt: 'See device on Sparkfun'), device.sparkfun %></td>
-	<% else %>
-	  <td></td>
-	<% end %>
-	<% if device.amazon.present? %>
-          <td><%= link_to image_tag('Amazon-logo-64x64.png', size: '32', alt: 'See device on Amazon'), device.amazon %></td>
-	<% else %>
-          <td><%= link_to image_tag('Amazon-logo-64x64.png', size: '32', alt: 'See device on Amazon'), device.to_amazon_link %></td>
-	<% end %>
+        <th>Part</th>
+        <th>Description</th>
+        <th>Manufacturer</th>
+        <th>Addresses</th>
+        <th>Datasheet</th>
+        <th>Adafruit</th>
+        <th>Sparkfun</th>
+        <th>Amazon</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
 
-<br>
+    <tbody>
+      <% @devices.each do |device| %>
+        <tr>
+          <th scope="row"><%= link_to device.part_number, device %></th>
+          <td><%= device.friendly_name %></td>
+          <td><%= device.manufacturer %></td>
+          <% addresses = device.address.to_a %>
+          <% if addresses.empty? %>
+            <td class="text-secondary">none</td>
+          <% elsif addresses.length <= 2 %>
+            <td><%= safe_join(addresses.map { |a| link_to(a.to_s, a) }, ", ") %></td>
+          <% else %>
+            <td><%= link_to addresses.length, device %></td>
+          <% end %>
+          <td>
+            <% if device.datasheet.present? %>
+              <%= link_to icon("file-earmark-text", class: "fs-4"), device.datasheet, title: "Datasheet" %>
+            <% end %>
+          </td>
+          <td>
+            <% if device.adafruit.present? %>
+              <%= link_to image_tag("Adafruit-logo-64x64.png", size: "32", alt: "See device on Adafruit"), device.adafruit %>
+            <% end %>
+          </td>
+          <td>
+            <% if device.sparkfun.present? %>
+              <%= link_to image_tag("Sparkfun-logo-64x64.png", size: "32", alt: "See device on Sparkfun"), device.sparkfun %>
+            <% end %>
+          </td>
+          <td>
+            <%= link_to image_tag("Amazon-logo-64x64.png", size: "32", alt: "See device on Amazon"), device.amazon.presence || device.to_amazon_link %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
 
 <% if user_signed_in? %>
-<%= link_to 'New Device', new_device_path %>
+  <%= link_to "New Device", new_device_path, class: "btn btn-outline-secondary btn-sm" %>
 <% end %>
 
-<%= will_paginate @devices %>
+<%== pagy_bootstrap_nav(@pagy) if @pagy && @pagy.pages > 1 %>
 
-<% content_for :page_title, 'List of I2C Devices' %>
+<% content_for :page_title, "List of I2C Devices" %>
 <% content_for :page_description, "List of I2C/TwoWire Devices and their addresses" %>

@@ -1,0 +1,42 @@
+---
+description: Ruby coding style aligned with project RuboCop config
+globs: "**/*.rb"
+alwaysApply: false
+---
+
+# Ruby Style
+
+Follow the project's `.rubocop.yml` conventions:
+
+- **Strings:** Use single quotes unless interpolation is needed
+- **Line length:** Max 120 characters
+- **Frozen string literal:** Do not add `# frozen_string_literal: true` comments
+- **Target Ruby:** 3.3 — use modern Ruby syntax (pattern matching, endless methods where clear)
+- **New cops:** All new RuboCop cops are enabled
+
+## Patterns
+
+- Prefer `Hash#fetch` with defaults over `Hash#[]` when a missing key is possible
+- Use keyword arguments for methods with 3+ parameters
+- Keep controllers thin — extract logic to service objects or model methods
+- Use `ActiveRecord::Enum` for status fields
+- Guard clauses over nested conditionals
+
+```ruby
+# ❌
+def process(member)
+  if member.active?
+    if member.paid?
+      do_work(member)
+    end
+  end
+end
+
+# ✅
+def process(member)
+  return unless member.active?
+  return unless member.paid?
+
+  do_work(member)
+end
+```

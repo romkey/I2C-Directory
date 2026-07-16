@@ -1,0 +1,81 @@
+name: i2c-directory-dev
+
+x-app: &app
+  build:
+    context: .
+    target: development
+  image: i2c-directory-dev:latest
+  env_file:
+    - path: .env
+      required: false
+  environment: &app_env
+    DATABASE_HOST: postgresql
+    DATABASE_USERNAME: postgres
+    REDIS_URL: redis://redis:6379/0
+    RAILS_ENV: development
+  volumes:
+    - .:/rails
+    - node_modules:/rails/node_modules
+    - bundle:/usr/local/bundle
+  networks:
+    - i2c-directory-dev
+  depends_on:
+    postgresql:
+      condition: service_healthy
+    redis:
+      condition: service_started
+
+services:
+  postgresql:
+    container_name: i2c-directory-dev-postgresql
+    image: postgres:16
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: trust
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgresql_data:/var/lib/postgresql/data
+    networks:
+      - i2c-directory-dev
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    container_name: i2c-directory-dev-redis
+    image: redis:8
+    ports:
+      - "6379:6379"
+    networks:
+      - i2c-directory-dev
+
+  web:
+    <<: *app
+    container_name: i2c-directory-dev-web
+    command: bash -c "yarn build:css && bin/rails server -b 0.0.0.0 -p 3000"
+    environment:
+      <<: *app_env
+      PREPARE_DB: "1"
+    ports:
+      - "3000:3000"
+
+  css:
+    <<: *app
+    container_name: i2c-directory-dev-css
+    command: yarn watch:css
+
+  sidekiq:
+    <<: *app
+    container_name: i2c-directory-dev-sidekiq
+    command: bundle exec sidekiq
+
+networks:
+  i2c-directory-dev:
+    name: i2c-directory-dev
+
+volumes:
+  postgresql_data:
+  node_modules:
+  bundle:

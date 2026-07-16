@@ -1,0 +1,26 @@
+name: Lint
+
+on:
+  push:
+    branches: [main, staging, master]
+  pull_request:
+    branches: [main, staging, master]
+
+concurrency:
+  group: lint-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  rubocop:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: .ruby-version
+          bundler-cache: true
+
+      - name: Run RuboCop (omakase)
+        run: bin/rubocop -f github

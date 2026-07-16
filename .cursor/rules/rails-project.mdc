@@ -1,0 +1,22 @@
+---
+description: Core Rails project conventions for Links
+alwaysApply: true
+---
+
+# Links Project Conventions
+
+- **Stack:** Rails 8.1, Ruby 4.0.5, PostgreSQL 16, Redis 8, Sidekiq 8
+- **Frontend:** Bootstrap 5.3 via cssbundling-rails, Stimulus, Turbo, importmap-rails
+- **Auth:** OmniAuth OpenID Connect + optional local account from environment variables
+- **Testing:** Minitest with fixtures, Capybara + Selenium for system tests — write tests for every change and regression tests for every fix
+- **Linting:** RuboCop with rubocop-rails-omakase — run via `docker compose -f docker-compose.lint.yml run --rm rubocop`
+- **Local dev:** Use compose files: `docker-compose.dev.yml`, `docker-compose.test.yml`, `docker-compose.lint.yml` (see README)
+- **CI:** GitHub Actions on push/PR to `main` and `staging`; Docker images on version tags and staging merges
+- **Documentation:** Update `CHANGELOG.md` and `README.md` with every user-facing change
+
+## Key Architectural Patterns
+
+- Service objects live in `app/services/` for external API integrations
+- Background jobs use Sidekiq; use plain queue names (no `queue_name_prefix`)
+- Environment config via dotenv-rails (`.env` files)
+- Version lives in `VERSION`; Docker sets `APP_VERSION` from git tags

@@ -1,7 +1,4 @@
 # Be sure to restart your server when you modify this file.
 
-# Add new mime types for use in respond_to blocks:
-# Mime::Type.register "text/richtext", :rtf
-
+# C++ source download for the Arduino/ESP I2C scanner generator.
 Mime::Type.register "text/x-c", :cpp
-#Mime::Type.register "application/rss+xml", :rss

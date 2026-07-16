@@ -1,27 +1,24 @@
-<%= form_with(model: resource, local: true) do |form| %>
+<%= form_with(model: resource) do |form| %>
   <% if resource.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(resource.errors.count, "error") %> prohibited this resource from being saved:</h2>
-
-      <ul>
-      <% resource.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
+    <div class="alert alert-danger">
+      <h2 class="h6"><%= pluralize(resource.errors.count, "error") %> prohibited this resource from being saved:</h2>
+      <ul class="mb-0">
+        <% resource.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
       </ul>
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :title %>
-    <%= form.text_field :title %>
+  <div class="mb-3">
+    <%= form.label :title, class: "form-label" %>
+    <%= form.text_field :title, class: "form-control" %>
   </div>
 
-  <div class="field">
-    <%= form.label :link %>
-    <%= form.text_field :link %>
+  <div class="mb-3">
+    <%= form.label :link, class: "form-label" %>
+    <%= form.text_field :link, class: "form-control" %>
   </div>
 
-  <div class="actions">
-    <%= form.submit %>
-  </div>
+  <%= form.submit class: "btn btn-primary" %>
 <% end %>

@@ -1,0 +1,8 @@
+New contact message
+
+Name: <%= @contact.name.presence || "(not provided)" %>
+Email: <%= @contact.email %>
+Subject: <%= @contact.subject.presence || "(none)" %>
+
+Message:
+<%= @contact.message %>

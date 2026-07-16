@@ -1,45 +1,47 @@
 class DevicesController < ApplicationController
-  before_action :set_device, only: [:show, :edit, :update, :destroy, :clear_suggestions, :driver ]
+  before_action :set_device, only: [ :show, :edit, :update, :destroy, :clear_suggestions, :driver ]
   before_action :authenticate_user!, only: [ :new, :edit, :update, :destroy, :clear_suggestions, :driver ]
 
   # GET /devices
   # GET /devices.json
   def index
-    @devices = if params[:q]
+    @devices = if params[:q].present?
                  @is_search = true
-                 Device.where("part_number ILIKE '%#{params[:q]}%' OR friendly_name ILIKE '%#{params[:q]}%' OR manufacturer ILIKE '%#{params[:q]}%'").order(part_number: :asc)
-               else
+                 term = "%#{params[:q]}%"
+                 Device.where("part_number ILIKE :q OR friendly_name ILIKE :q OR manufacturer ILIKE :q", q: term)
+                       .order(part_number: :asc)
+    else
                  @is_search = false
                  Device.order(part_number: :asc)
-               end
+    end
 
     if user_signed_in? && params[:suggestion]
-        @devices = @devices.suggestions
+      @devices = @devices.suggestions
     else
-        @devices = @devices.published
+      @devices = @devices.published
     end
 
     respond_to do |format|
       format.html {
-        @devices = @devices.paginate(page: params[:page])
+        @pagy, @devices = pagy(@devices)
         render :index
       }
 
       format.json {
-        headers['Content-Disposition'] = 'attachment; filename="i2c-devices.json"'
-        headers['Content-Type'] ||= 'application/json'
-        send_data @devices.to_json, filename: 'devices.json'
+        headers["Content-Disposition"] = 'attachment; filename="i2c-devices.json"'
+        headers["Content-Type"] ||= "application/json"
+        send_data @devices.to_json, filename: "devices.json"
       }
 
       format.cpp {
-        headers['Content-Disposition'] = 'attachment; filename="i2c_scanner_devices.cpp'
-        headers['Content-Type'] ||= 'text/x-c'
-        render 'i2c_scanner_devices.cpp', filename: 'i2c_scanner_devices.cpp'
+        headers["Content-Disposition"] = 'attachment; filename="i2c_scanner_devices.cpp"'
+        headers["Content-Type"] ||= "text/x-c"
+        render :i2c_scanner_devices, layout: false
       }
 
       format.rss {
         @devices = Device.order(created_at: :desc).limit(20)
-        render 'feed', layout: false
+        render "feed", layout: false
       }
     end
   end
@@ -69,10 +71,10 @@ class DevicesController < ApplicationController
 
     respond_to do |format|
       unless @device.suggestion? || user_signed_in?
-        format.html { redirect_to new_user_session_path, notice: 'Not created, user not signed in' }
-      else 
+        format.html { redirect_to new_user_session_path, notice: "Not created, user not signed in" }
+      else
         if @device.save
-          format.html { redirect_to @device, notice: 'Device was successfully created.' }
+          format.html { redirect_to @device, notice: "Device was successfully created." }
           format.json { render :show, status: :created, location: @device }
         else
           format.html { render :new }
@@ -98,16 +100,16 @@ class DevicesController < ApplicationController
     @suggestion = true
 
     respond_to do |format|
-      format.html { render :new, notice: 'Enter device details' }
+      format.html { render :new, notice: "Enter device details" }
     end
   end
 
   def suggest_create
-    @device = Device.new(device_params, suggestion: true)
+    @device = Device.new(device_params.merge(suggestion: true))
 
     respond_to do |format|
       if @device.save
-        format.html { redirect_to @device, notice: 'Device was successfully created.' }
+        format.html { redirect_to @device, notice: "Device was successfully created." }
         format.json { render :show, status: :created, location: @device }
       else
         format.html { render :new }
@@ -118,7 +120,7 @@ class DevicesController < ApplicationController
 
   def driver
     driver = DatasheetSuggestion.find params[:driver_id]
-    @device.drivers.push({ title: driver.title, link: driver.link})
+    @device.drivers.push({ title: driver.title, link: driver.link })
     @device.save
 
     driver.delete
@@ -131,7 +133,7 @@ class DevicesController < ApplicationController
   def update
     respond_to do |format|
       if @device.update(device_params)
-        format.html { redirect_to @device, notice: 'Device was successfully updated.' }
+        format.html { redirect_to @device, notice: "Device was successfully updated." }
         format.json { render :show, status: :ok, location: @device }
       else
         format.html { render :edit }
@@ -145,14 +147,14 @@ class DevicesController < ApplicationController
   def destroy
     @device.destroy
     respond_to do |format|
-      format.html { redirect_to devices_url, notice: 'Device was successfully destroyed.' }
+      format.html { redirect_to devices_url, notice: "Device was successfully destroyed." }
       format.json { head :no_content }
     end
   end
 
   def clear_suggestions
     @device.datasheet_suggestions.delete_all
-    redirect_to '/admin'
+    redirect_to "/admin"
   end
 
   private
@@ -163,6 +165,7 @@ class DevicesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def device_params
-      params.require(:device).permit(:part_number, :friendly_name, :addresses, :manufacturer, :suggestion, :obsolete, :datasheet, :adafruit, :sparkfun, :amazon, :release_date, :is_5v, :is_3v, :is_standard_speed, :is_full_speed, :is_fast_speed, :is_high_speed, :is_ultra_fast_speed, :is_spi, address_ids: [])
+      params.require(:device).permit(:part_number, :friendly_name, :addresses, :manufacturer, :suggestion, :obsolete,
+                                     :datasheet, :adafruit, :sparkfun, :amazon, :release_date, :is_5v, :is_3v, :is_standard_speed, :is_full_speed, :is_fast_speed, :is_high_speed, :is_ultra_fast_speed, :is_spi, address_ids: [])
     end
 end

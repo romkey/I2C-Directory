@@ -1,0 +1,35 @@
+---
+description: Maintain the user guide when adding user-facing features
+globs: docs/USER_GUIDE.md
+alwaysApply: false
+---
+
+# User Guide Maintenance
+
+Update `docs/USER_GUIDE.md` whenever user-facing functionality is added or changed.
+
+## Structure
+
+The guide has two types of sections:
+
+### Major Feature Sections
+
+Dedicated sections for large functional areas. Each should cover:
+- What the feature does
+- How to access it
+- Key concepts and terminology
+- Step-by-step workflows with screenshots or descriptions
+
+### How-To Section
+
+A collection of focused, task-oriented entries for small things users need to do. Each entry should:
+- Have a clear action-oriented title (e.g., "How to link a Ko-fi payment to a member")
+- Be self-contained — a user can follow it without reading other sections
+- Be concise — numbered steps, no unnecessary background
+
+## When to Update
+
+- **New feature:** Add a major section or how-to entry depending on scope
+- **Changed feature:** Update the existing section to reflect the new behavior
+- **Removed feature:** Remove or mark as deprecated
+- **New integration:** Add a section explaining setup and usage from the user's perspective

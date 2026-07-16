@@ -1,6 +1,6 @@
 class SitemapController < ApplicationController
   def index
-    @pages = ['', 'about' ]
+    @pages = [ "", "about" ]
 
     @devices = Device.all
     @addresses = Address.all

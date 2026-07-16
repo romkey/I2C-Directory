@@ -1,0 +1,15 @@
+name: i2c-directory-lint
+
+services:
+  rubocop:
+    build:
+      context: .
+      dockerfile: Dockerfile.rubocop
+    image: i2c-directory-rubocop:latest
+    volumes:
+      - .:/rails
+    working_dir: /rails
+
+networks:
+  default:
+    name: i2c-directory-lint

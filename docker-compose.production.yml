@@ -1,0 +1,51 @@
+name: i2c-directory-production
+
+x-app: &app
+  build:
+    context: .
+    target: production
+    args:
+      APP_VERSION: ${APP_VERSION:-dev}
+  image: i2c-directory:latest
+  env_file:
+    - path: .env
+      required: false
+  environment: &app_env
+    DATABASE_URL: ${DATABASE_URL:?DATABASE_URL is required}
+    REDIS_URL: ${REDIS_URL:-redis://redis:6379/0}
+    SECRET_KEY_BASE: ${SECRET_KEY_BASE:?SECRET_KEY_BASE is required}
+    RAILS_ENV: production
+  depends_on:
+    redis:
+      condition: service_started
+  restart: unless-stopped
+
+services:
+  redis:
+    image: redis:8
+    volumes:
+      - redis_data:/data
+    restart: unless-stopped
+
+  web:
+    <<: *app
+    command: bundle exec puma -C config/puma.rb
+    environment:
+      <<: *app_env
+      PREPARE_DB: "1"
+    ports:
+      - "${PORT:-3000}:3000"
+
+  sidekiq:
+    <<: *app
+    command: bundle exec sidekiq
+
+  migrate:
+    <<: *app
+    profiles:
+      - tools
+    restart: "no"
+    command: bundle exec rails db:migrate
+
+volumes:
+  redis_data:

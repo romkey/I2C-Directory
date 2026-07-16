@@ -1,14 +1,13 @@
-<p id="notice"><%= notice %></p>
+<div class="card">
+  <div class="card-body">
+    <h1 class="card-title h4"><%= @resource.title %></h1>
+    <p class="card-text"><%= link_to @resource.link, @resource.link %></p>
 
-<p>
-  <strong>Title:</strong>
-  <%= @resource.title %>
-</p>
-
-<p>
-  <strong>Link:</strong>
-  <%= @resource.link %>
-</p>
-
-<%= link_to 'Edit', edit_resource_path(@resource) %> |
-<%= link_to 'Back', resources_path %>
+    <div class="d-flex gap-2">
+      <% if user_signed_in? %>
+        <%= link_to "Edit", edit_resource_path(@resource), class: "btn btn-outline-secondary" %>
+      <% end %>
+      <%= link_to "Back", resources_path, class: "btn btn-link" %>
+    </div>
+  </div>
+</div>

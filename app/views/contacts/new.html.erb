@@ -1,0 +1,41 @@
+<div class="row">
+  <div class="col-lg-7">
+    <h1 class="h3 mb-3">Contact us</h1>
+
+    <%= form_with model: @contact, url: contact_path, method: :post do |form| %>
+      <% if @contact.errors.any? %>
+        <div class="alert alert-danger">
+          <ul class="mb-0">
+            <% @contact.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <div class="mb-3">
+        <%= form.label :name, class: "form-label" %>
+        <%= form.text_field :name, class: "form-control" %>
+      </div>
+
+      <div class="mb-3">
+        <%= form.label :email, class: "form-label" %>
+        <%= form.email_field :email, class: "form-control", required: true %>
+      </div>
+
+      <div class="mb-3">
+        <%= form.label :subject, class: "form-label" %>
+        <%= form.text_field :subject, class: "form-control" %>
+      </div>
+
+      <div class="mb-3">
+        <%= form.label :message, class: "form-label" %>
+        <%= form.text_area :message, class: "form-control", rows: 6, required: true %>
+      </div>
+
+      <%= form.submit "Send message", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>
+
+<% content_for :page_title, "Contact | I2C Device Directory" %>

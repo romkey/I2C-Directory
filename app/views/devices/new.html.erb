@@ -1,5 +1,7 @@
-<h1>New Device</h1>
+<h1 class="h3 mb-3"><%= @suggestion ? "Suggest a Device" : "New Device" %></h1>
 
-<%= render 'form', device: @device %>
+<%= render "form", device: @device %>
 
-<%= link_to 'Back', devices_path %>
+<%= link_to "Back", devices_path, class: "btn btn-link px-0 mt-3" %>
+
+<% content_for :page_title, "New Device | I2C Device Directory" %>

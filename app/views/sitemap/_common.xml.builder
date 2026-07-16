@@ -4,5 +4,4 @@ base_url = "http://#{request.host_with_port}/"
   xml.url do
     xml.loc base_url+page
   end
-
 end

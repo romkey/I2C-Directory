@@ -1,9 +1,9 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  title: MyString
-  link: MyString
+  title: Adafruit I2C guide
+  link: https://learn.adafruit.com/i2c
 
 two:
-  title: MyString
-  link: MyString
+  title: SparkFun I2C tutorial
+  link: https://learn.sparkfun.com/tutorials/i2c

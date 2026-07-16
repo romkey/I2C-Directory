@@ -1,41 +1,34 @@
-<h1>I2C Address List</h1>
+<h1 class="h3 mb-3">I2C Address List</h1>
 
-<table class='table table-striped'>
-  <thead class='thead-light'>
-    <tr>
-      <th>Address</th>
-      <th>Devices</th>
-      <th>Reserved</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @addresses.each do |address| %>
-      <% if address.reserved? || address.device.count > 0 %>
+<div class="table-responsive">
+  <table class="table table-striped align-middle">
+    <thead class="table-light">
       <tr>
-        <th scope="row"><%= link_to("0x%02x" %address.address, address) %></th>
-	<td>
-	  <% address.device.published.map do |device| %>
-	     <%= link_to(device.part_number, device) %> 
-	   <% end %>
-	</td>
-	<td>
-	  <% if address.reserved? %>
-	  ✔
-	  <% end %>
-	</td>
+        <th>Address</th>
+        <th>Devices</th>
+        <th>Reserved</th>
       </tr>
+    </thead>
+
+    <tbody>
+      <% @addresses.each do |address| %>
+        <% if address.reserved? || address.device.count.positive? %>
+          <tr>
+            <th scope="row"><%= link_to format("0x%02x", address.address), address %></th>
+            <td>
+              <%= safe_join(address.device.published.map { |device| link_to(device.part_number, device) }, ", ") %>
+            </td>
+            <td><%= icon("check-lg") if address.reserved? %></td>
+          </tr>
+        <% end %>
       <% end %>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
+    </tbody>
+  </table>
+</div>
 
 <% if user_signed_in? %>
-<%= link_to 'New Address', new_address_path %>
+  <%= link_to "New Address", new_address_path, class: "btn btn-outline-secondary btn-sm" %>
 <% end %>
 
-<% content_for :page_title, 'List of I2C Addresses' %>
+<% content_for :page_title, "List of I2C Addresses" %>
 <% content_for :page_description, "List of I2C/TwoWire addresses and devices using them" %>

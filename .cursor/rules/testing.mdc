@@ -1,0 +1,34 @@
+---
+description: Minitest and testing conventions
+globs: "test/**/*.rb"
+alwaysApply: false
+---
+
+# Testing
+
+- **Framework:** Minitest 5 with Rails test helpers
+- **Fixtures:** YAML fixtures in `test/fixtures/`; `fixtures :all` is set in `test_helper.rb`
+- **Parallelization:** Tests run in parallel by processor count
+- **Run tests:** `docker compose -f docker-compose.test.yml run --rm test`
+
+## Conventions
+
+- Write tests for every change; write regression tests for every bug fix
+- Place model tests in `test/models/`, controller tests in `test/controllers/`, service tests in `test/services/`
+- Use `assert_*` methods, not RSpec-style `expect`
+- Use `setup` and `teardown` methods for test lifecycle, not `before`/`after`
+- System tests use Capybara with Selenium Chrome — place in `test/system/`
+- Stub external API calls (OIDC provider, etc.) in tests — never hit real APIs
+
+```ruby
+# ✅ Standard test structure
+class MemberTest < ActiveSupport::TestCase
+  setup do
+    @member = members(:active_member)
+  end
+
+  test 'should be valid with required attributes' do
+    assert @member.valid?
+  end
+end
+```

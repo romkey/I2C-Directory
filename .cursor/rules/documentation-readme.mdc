@@ -1,0 +1,24 @@
+---
+description: Maintain the project README with current setup and architecture info
+globs: README.md
+alwaysApply: false
+---
+
+# README Maintenance
+
+Keep `README.md` as the authoritative project overview. Update it when:
+
+- Dependencies or system requirements change (Ruby, Node, PostgreSQL, Redis versions)
+- Setup steps change (new env vars, new services, Docker changes)
+- Major architectural decisions are made (new service integrations, auth changes)
+
+## Required Sections
+
+1. **Project overview** — what Links does
+2. **Requirements** — Ruby, Node, PostgreSQL, Redis versions
+3. **Setup** — clone, env config, Docker Compose, database setup
+4. **Running locally** — `docker compose -f docker-compose.dev.yml up`, accessing the app
+5. **Testing** — `docker compose -f docker-compose.test.yml run --rm test`
+6. **Linting** — `docker compose -f docker-compose.lint.yml run --rm rubocop`
+7. **Deployment** — GitHub Actions CI/CD, Docker image releases
+8. **Architecture** — key directories, service objects, background jobs

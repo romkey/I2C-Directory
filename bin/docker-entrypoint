@@ -1,0 +1,17 @@
+#!/bin/bash -e
+
+# In development the source is bind-mounted, so make sure gems and JS deps
+# are present before starting any process.
+if [ "${RAILS_ENV}" = "development" ]; then
+  bundle check || bundle install
+  if [ -f package.json ] && [ ! -x node_modules/.bin/sass ]; then
+    yarn install
+  fi
+fi
+
+# Prepare the database only for the process that owns it (the web service).
+if [ "${PREPARE_DB}" = "1" ]; then
+  bundle exec rails db:prepare
+fi
+
+exec "${@}"
